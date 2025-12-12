@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Membuat Model User
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  jurusan       String?
+  keahlian      String?
+  kelamin       String
+  pendidikan    String?
+  kelas         String
+  link          String?
+  role          String    @default("Pelajar")
+  DaftarMagang  DaftarMagang[]
+
+ 
+  @@map("users")
+}
+
+model DaftarMagang {
+  id          String @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  magang      Magang    @relation(fields: [magangId], references: [id], onDelete: Cascade)
+  magangId    String    
+}
+ 
+model Magang {
+  id           String @id @default(cuid())
+  name         String
+  jurusan      String 
+  keahlian     String
+  deskipsi     String
+
+  perusahaan  Perusahaan  @relation(fields: [perusahaanId], references: [id],onDelete: Cascade)
+  perusahaanId String
+
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  DaftarMagang  DaftarMagang[]
+
+}
+
+model Perusahaan {
+  id          String @id @default(cuid())
+  name        String
+  alamat      String
+  deskripsi   String?
+
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Magang      Magang[]
+}
