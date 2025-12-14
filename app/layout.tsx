@@ -16,10 +16,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SGIntern",
-  description: "SGIntern Sebuah Aplikasi Informasi Magang Dan Lowongan Pekerjaan",
-};
-
+  title: {
+    default: "SGIntern",
+    template: "%s | SGIntern",
+  },
+  description:'Aplikasi Magang dan Lowongan Pekerjaan',
+  openGraph:{
+    title: {
+      default: "SGIntern",
+      template: "%s | SGIntern",
+    },
+    description:'Aplikasi Magang Dan Lowongan Pekerjaan',
+    url: "https://kumangas.com",
+    type:"website"
+  }
+}
+  
 export default function RootLayout({
   children,
 }: Readonly<{

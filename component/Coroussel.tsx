@@ -52,8 +52,15 @@ export const CorousselComponent = ({Information}: {Information: InfoItem[]}) => 
                         </Link>
                     )})}
                     </ul>                 
-            <button className="absolute w-24 h-full top-0 left-0 z-21" onClick={PrevSlide}>a</button>
-            <button className="absolute w-24 h-full top-0 right-0 z-21" onClick={NextSlide}>a</button>
+            <button className="absolute w-24 h-full top-0 left-0 z-21 flex justify-center items-center" onClick={PrevSlide}>
+                    <div className="w-10 h-10 flex justify-center items-center bg-blue-600 rounded-full">
+                        <i className="fa-solid fa-angle-left"></i>
+                    </div></button>
+            <button className="absolute w-24 h-full top-0 right-0 z-21 flex justify-center items-center" onClick={NextSlide}>
+                <div className="w-10 h-10 flex justify-center items-center bg-blue-600 rounded-full">
+                    <i className="fa-solid fa-angle-right"></i>
+                </div>
+            </button>
         </div>
     </>
   )

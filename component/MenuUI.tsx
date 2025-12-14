@@ -38,7 +38,7 @@ export const MenuUi = () => {
         <>
             <div className="fixed top-0 left-0 flex justify-between w-screen h-20 p-5 bg-blue-950 z-40 text-white">
                 <div className="flex flex-row gap-10 flex-nowrap items-center">
-                    <button onClick={() => StateHandler('SideBar')} className="w-10 h-10 bg-blue-700 rounded-full">=</button>
+                    <button onClick={() => StateHandler('SideBar')} className="w-10 h-10 bg-blue-700 rounded-full text-center"><i className="fa-solid fa-bars"></i></button>
                     <Link href={'/'}>
                         <h1 className="text-2xl">SGIntern</h1>
                     </Link>

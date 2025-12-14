@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
-import { before } from "node:test";
+import { NextResponse } from "next/server";
+
 
 // Helper function untuk response error
 function ErrorResponse(message : string, status = 400) {
@@ -45,12 +46,12 @@ export async function GET() {
 //Pendaftaran Data User
 export async function POST(request: Request) {
     const body = await request.json()
-    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan} = body
+    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link} = body
 
     try{
         // VALIDASI FIELD WAJIB
         if ( !email || !name || !kelamin || !kelas) {
-            return Response.json(
+            return NextResponse.json(
                 { error: "name dan email wajib diisi",request: { name, email, jurusan, keahlian,  }},
                 { status: 400 }
             );
@@ -58,7 +59,7 @@ export async function POST(request: Request) {
         //Pencegahan Duplikasi
         const existingUser = await prisma.user.findUnique({ where: { email } })
         if (existingUser) {
-            return Response.json({
+            return NextResponse.json({
                 message:'User Sudah Terdaftar',
                 status: 409, 
                 
@@ -75,10 +76,10 @@ export async function POST(request: Request) {
                 kelamin,
                 kelas,
                 pendidikan,
-                
+                link
             }
         })
-        return Response.json(
+        return NextResponse.json(
             {
                 message:'Berhasil Di Daftarkan',
                 status: 201, 
@@ -89,7 +90,7 @@ export async function POST(request: Request) {
         // Handler Error
 
         console.log("POST /api/user error:")
-        return Response.json(
+        return NextResponse.json(
             {
                 message: 'Gagal Membuat Akun',
             }, {status : 500}
@@ -99,12 +100,12 @@ export async function POST(request: Request) {
 
 export async function PATCH(request:Request) {
     const body = await request.json()
-    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan} = body
+    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link} = body
 
     try{
         // VALIDASI FIELD WAJIB
         if ( !email || !name || !kelamin || !kelas) {
-            return Response.json(
+            return NextResponse.json(
                 { error: "name, dan email wajib diisi",request: { name, email, jurusan, keahlian,  }},
                 
                 { status: 400 }
@@ -113,25 +114,32 @@ export async function PATCH(request:Request) {
         //Pencegahan Duplikasi
         const existingUser = await prisma.user.findUnique({ where: { email } })
         if (!existingUser) {
-            return ErrorResponse('User Tidak Ditemukan',404)
+
+            return NextResponse.json(
+                { message: 'User Tidak Ditemukan'},
+                
+                { status: 400 }
+            );
         }
 
         // pencegahan Query Update Tidak Perlu
-        const Before =
+            
+
+        const isSame = 
             existingUser.name === name &&
             existingUser.jurusan === jurusan &&
             existingUser.keahlian === keahlian &&
             existingUser.kelamin === kelamin &&
             existingUser.kelas === kelas &&
-            existingUser.pendidikan === pendidikan
-
-        const isSame = JSON.stringify(Before) == JSON.stringify(body)
+            existingUser.pendidikan === pendidikan &&
+            existingUser.link === link 
 
         if (isSame) {
-            return Response.json(
-                { message: "Tidak ada perubahan data" },
+            return NextResponse.json(
+                { message: "Tidak ada perubahan data"},
+                
                 { status: 400 }
-            )
+            );
         }
         
         const updateUser = await prisma.user.update({
@@ -144,17 +152,20 @@ export async function PATCH(request:Request) {
                 kelamin,
                 kelas,
                 pendidikan,
+                link
             }
         })
 
 
-        return Response.json(
-            {message:`Data Telah DiUpdate, IsSame = ${isSame}`, data : existingUser, status: 201, updateUser}
+        return NextResponse.json(
+            {message:`Data Telah DiUpdate,`,  status: 204, updateUser}
         )
     }catch{
         // Handler Error
         console.log("PATCH /api/user error:")
-        return ErrorResponse("Gagal Membuat User", 500)
+        return NextResponse.json(
+            {message:"Gagal Memperbarui User",  status: 500, }
+        )
     }
 }
 
@@ -165,7 +176,7 @@ export async function DELETE(request:Request) {
     //Pencegahan Query Tidak Perlu
     const existingUser = await prisma.user.findUnique({ where: { email } })
     if (!existingUser) {
-        return Response.json(
+        return NextResponse.json(
             {
                 message: 'User Tidak Ditemukan',
                 iscache : existingUser ? 'anomali' : false
@@ -177,13 +188,13 @@ export async function DELETE(request:Request) {
 
         await prisma.user.delete({where: {email}})
 
-        return Response.json({
+        return NextResponse.json({
             message : 'User Berhasil Dihapus',
             status:200
         })
     }catch{
-        console.log("PATCH /api/user error:")
-        return Response.json(
+        console.log("DELETE /api/user error:")
+        return NextResponse.json(
             {
                 message: 'Gagal menghapus Akun',
                 iscache : existingUser ? 'anomali' : false

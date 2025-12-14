@@ -16,7 +16,7 @@ export const ListCardComponents = ({MagangList,Path} : {MagangList : MagangType[
                     {MagangList.map((Magang,i) => {
                         return (
                             <Link prefetch={false} href={`/${Path}/id/${encodeURIComponent(Magang.Title).replace(/ /g,'-')}`} key={i} className="xl:basis-1/4 lg:basis-1/3 md:basis-1/2 basis-full py-2 flex gap-1 overflow-hidden transition-opacity bg-blue-200">
-                                <div className="image shrink-0 w-24 h-32 bg-black relative">
+                                <div className="image shrink-0 w-24 h-32 bg-blue-500 relative">
                                     <Image src={'/public/vercel.svg'} 
                                         alt={Magang.Title} 
                                         className=" object-cover "
