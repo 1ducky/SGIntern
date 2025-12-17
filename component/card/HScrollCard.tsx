@@ -8,25 +8,25 @@ type MagangType = {
     Alamat : string
 }
 
-export const HScrollCard = ({MagangList,Path} : {MagangList : MagangType[], Path : string}) => {
+export const HScrollCard = ({DataList,Path} : {DataList : MagangType[], Path : string}) => {
     return(
-        <div className="Scrollbar-transparent my-5 px-5 overflow-x-scroll flex flex-row flex-nowrap gap-5">
+        <div className="Scrollbar-transparent my-5 px-5 overflow-x-scroll flex flex-row flex-nowrap gap-20 transform-gpu will-change-transform">
             {
-                MagangList.map((Magang,i) => {
+                DataList.map((List,i) => {
                     
                     return(
-                        <Link href={`/${Path}/id/${encodeURIComponent(Magang.Title).replace(/ /g,'-')}}`} key={i} className="flex flex-col w-40">
-                            <div className="image shrink-0 w-40 h-60 bg-blue-500 relative">
+                        <Link href={`/${Path}/id/${encodeURIComponent(List.Title).replace(/ /g,'-')}}`} key={i} className="flex flex-col w-40">
+                            <div className="image shrink-0 w-52 h-60 bg-blue-500 relative">
                                 <Image 
                                     src={'/public/vercel.svg'} 
-                                    alt={Magang.Title} 
+                                    alt={List.Title} 
                                     className=" object-cover "
                                     fill
                                     sizes="160px"
                                     priority={false}
                                     decoding='async'/>
                             </div>
-                            <h3 className="text-wrap">{Magang.Perusahaan}</h3>
+                            <h3 className="text-wrap">{List.Perusahaan}</h3>
                         </Link>
                     )
                 })

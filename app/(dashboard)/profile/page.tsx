@@ -47,7 +47,7 @@ export default async function SettingsPage ()  {
 
     return(
         <>
-            <div className="flex flex-col items-center pl-10 gap-5 py-5">
+            <div className="flex flex-col items-center">
                 {!user ? 'loading...' : (
                     <PersonalizeForm MethodReq={MethodReq} UserData={userData} authData={authData}/>
                 )}

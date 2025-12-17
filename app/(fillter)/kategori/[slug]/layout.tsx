@@ -51,7 +51,7 @@ export default async function KategoriLayout({params,children} : Props){
 
                 
             </div>
-            <div className="w-1/6 mx-5 lg:block hidden">{slug}</div>
+            <div className="xl:w-1/6 mx-5 lg:block hidden">{slug}</div>
             {children}
         </div>
     )
