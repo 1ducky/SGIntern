@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation"
 import { updateProfileImage } from "@/utils/UploadImageHandler"
 
 import { useContextUtils } from "@/utils/ContextProvider";
+import { jurusanText,Kelas,kelamin } from "@/StatisData/StatisObj"
+import { keahlihan } from "@/StatisData/StatisObj"
 
 
 type ObjectKey = "link" | "pendidikan"
@@ -50,6 +52,17 @@ export default function SettingsPage ()  {
     const linkRef = useRef<HTMLInputElement>(null)
     const pendidikanRef = useRef<HTMLInputElement>(null)
     const fileRef = useRef<HTMLInputElement>(null)
+
+    
+
+    type Jurusantype = typeof jurusanText[number]
+
+    function isJurusan(value: unknown): value is Jurusantype {
+    return typeof value === 'string' && jurusanText.includes(value as Jurusantype)
+    }
+
+    const [jurusan,setJurusan] = useState<Jurusantype | ''>(isJurusan(userData?.jurusan) ? userData.jurusan : '')
+    const keahlian = isJurusan(jurusan) ? Object.values(keahlihan[jurusan]).map(value => value.nama) : []
 
 
     // Initial Value
@@ -162,6 +175,7 @@ export default function SettingsPage ()  {
         keahlian: formData.get("keahlian"),
         kelas: formData.get("kelas"),
         alamat: formData.get("alamat"),
+        kelamin: formData.get('kelamin'),
         pendidikan: ArratList.pendidikan.join('+'),
         link: ArratList.link.join('+') 
         }
@@ -176,7 +190,7 @@ export default function SettingsPage ()  {
                     email : AuthUser?.email ,
                     jurusan : data.jurusan,
                     keahlian : data.keahlian,
-                    kelamin : 'laki-laki',
+                    kelamin : data.kelamin,
                     kelas: data.kelas,
                     pendidikan:data.pendidikan,
                     link:data.link,
@@ -226,13 +240,41 @@ export default function SettingsPage ()  {
                     <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="nama" id="nama" placeholder="Harap Masukan Nama Lengkap Yang benar" defaultValue={`${userData?.name || ''}`} required />
 
                     <label className="text-lg" htmlFor="kelas">Kelas</label>
-                    <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="kelas" id="kelas" placeholder="Harap Masukan Kelas Yang benar" defaultValue={`${userData?.kelas || ''}`} required />
+                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                        <select name="kelas" id="kelas" defaultValue={userData?.kelas || ''} required className="w-full">
+                            {Kelas.map((item,i) => (
+                                <option value={item} key={i} className="capitalize">{item}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <label className="text-lg" htmlFor="kelamin">Kelamin</label>
+                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                        <select name="kelamin" id="kelamin" defaultValue={userData?.kelamin || ''} required className="w-full">
+                            {kelamin.map((item,i) => (
+                                <option value={item} key={i} className="capitalize">{item}</option>
+                            ))}
+                        </select>
+                    </div>
                     
                     <label className="text-lg" htmlFor="jurusan">Jurusan</label>
-                    <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="jurusan" id="jurusan" placeholder="Harap Masukan Jurusan Yang benar" defaultValue={`${userData?.jurusan || ''}`} required />
+                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                        <select name="jurusan" id="jurusan" onChange={(e) => setJurusan(isJurusan(e.target.value) ? e.target.value : '')} defaultValue={jurusan} required className="w-full">
+                            {jurusanText.map((item,i) => (
+                                <option value={item} key={i} className="capitalize">{item}</option>
+                            ))}
+                        </select>
+                    </div>
+                    
 
                     <label className="text-lg" htmlFor="Keahlihan">Keahlihan</label>
-                    <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="keahlian" id="keahlian" placeholder="Harap Masukan Keahlihan Yang benar" defaultValue={`${userData?.keahlian || ''}`} required />
+                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                        <select name="keahlian" id="keahlian" defaultValue={userData?.keahlian || ''} required className="w-full">
+                            {keahlian.map((item,i) => (
+                                <option value={item} key={i} className="capitalize">{item}</option>
+                            ))}
+                        </select>
+                    </div>
 
                     <label className="text-lg" htmlFor="alamat">Alamat</label>
                     <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="alamat" id="alamat" placeholder="Harap Masukan Alamat Yang benar" defaultValue={`${userData?.alamat || ''}`} required />
