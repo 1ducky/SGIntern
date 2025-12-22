@@ -1,0 +1,5 @@
+{
+    "magang" : ["name","deskripsi","jurusan","keahlihan","perusahaanId"],
+    "lowongan" : ["name","deskripsi","jurusan","keahlihan","perusahaanId"],
+    "perusahaan" : ["name","alamat","deskripsi","imageUrl"]
+}

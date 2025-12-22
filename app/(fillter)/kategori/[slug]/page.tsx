@@ -12,7 +12,7 @@ type Props = {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-    const StaticParams =['pekerjaan','magang','perusahaan']
+    const StaticParams =['lowongan','magang','perusahaan']
     return StaticParams.map( slug => ({slug : slug.toLowerCase()}))
 }
 

@@ -9,7 +9,7 @@ export const ListCardSkeleton = ({Total} : {Total : number}) =>{
 
 
                     return (
-                        <li key={i} className="xl:basis-1/4 lg:basis-1/3 md:basis-1/2 basis-full py-2 flex gap-1 overflow-hidden animate-pulse transform-gpu will-change-transform">
+                        <li key={i} className="xl:basis-1/3 lg:basis-1/2 basis-full py-2 flex gap-1 overflow-hidden animate-pulse transform-gpu will-change-transform">
                             <div className="image shrink-0 w-24 h-32 bg-blue-500 relative">
                                 
                                 

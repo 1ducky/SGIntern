@@ -46,11 +46,11 @@ export async function GET() {
 //Pendaftaran Data User
 export async function POST(request: Request) {
     const body = await request.json()
-    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link} = body
+    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link,alamat} = body
 
     try{
         // VALIDASI FIELD WAJIB
-        if ( !email || !name || !kelamin || !kelas) {
+        if ( !email || !name || !kelamin || !kelas || !alamat) {
             return NextResponse.json(
                 { error: "name dan email wajib diisi",request: { name, email, jurusan, keahlian,  }},
                 { status: 400 }
@@ -75,6 +75,7 @@ export async function POST(request: Request) {
                 keahlian,
                 kelamin,
                 kelas,
+                alamat,
                 pendidikan,
                 link
             }
@@ -86,13 +87,14 @@ export async function POST(request: Request) {
                 newUser
             }
         )
-    }catch{
+    }catch(error){
         // Handler Error
 
         console.log("POST /api/user error:")
         return NextResponse.json(
             {
                 message: 'Gagal Membuat Akun',
+                error: error instanceof Error ? error.message : error,
             }, {status : 500}
         )
     }
@@ -100,11 +102,11 @@ export async function POST(request: Request) {
 
 export async function PATCH(request:Request) {
     const body = await request.json()
-    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link} = body
+    const {name,email,jurusan,keahlian,kelamin,kelas,pendidikan,link,alamat} = body
 
     try{
         // VALIDASI FIELD WAJIB
-        if ( !email || !name || !kelamin || !kelas) {
+        if ( !email || !name || !kelamin || !kelas || !alamat) {
             return NextResponse.json(
                 { error: "name, dan email wajib diisi",request: { name, email, jurusan, keahlian,  }},
                 
@@ -132,7 +134,8 @@ export async function PATCH(request:Request) {
             existingUser.kelamin === kelamin &&
             existingUser.kelas === kelas &&
             existingUser.pendidikan === pendidikan &&
-            existingUser.link === link 
+            existingUser.link === link  &&
+            existingUser.alamat === alamat
 
         if (isSame) {
             return NextResponse.json(
@@ -152,7 +155,8 @@ export async function PATCH(request:Request) {
                 kelamin,
                 kelas,
                 pendidikan,
-                link
+                link,
+                alamat
             }
         })
 

@@ -45,7 +45,7 @@ export default function RootLayout({
 
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-blue-100`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-blue-200`}
         >
           <MenuUi></MenuUi>
           <div className="mt-20"></div>

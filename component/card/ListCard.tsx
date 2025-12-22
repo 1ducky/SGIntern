@@ -3,10 +3,10 @@ import Image from "next/image"
 import Link from "next/link"
 
 type MagangType = {
-    Title : string,
-    Image : string
-    Perusahaan : string
-    Alamat : string
+    name : string,
+    imageUrl : string
+    perusahaan : string
+    alamat : string
 }
 
 export const ListCardComponents = ({DataList,Path} : {DataList : MagangType[],Path : string }) => {
@@ -15,26 +15,29 @@ export const ListCardComponents = ({DataList,Path} : {DataList : MagangType[],Pa
                 <div className="mx-2 px-5 py-5 flex gap-y-2 flex-wrap flex-row transform-gpu will-change-transform">
                     {DataList.map((List,i) => {
                         return (
-                            <Link prefetch={false} href={`/${Path}/id/${encodeURIComponent(List.Title).replace(/ /g,'-')}`} key={i} className="xl:basis-1/4 lg:basis-1/3 md:basis-1/2 basis-full py-2 flex gap-1 overflow-hidden transition-opacity bg-blue-200">
-                                <div className="image shrink-0 w-28 h-32 bg-blue-500 relative">
-                                    <Image src={'/public/vercel.svg'} 
-                                        alt={List.Title} 
-                                        className=" object-cover "
-                                        fill
-                                        sizes="96px"
-                                        priority={false}
-                                        decoding='async'/>
-                                    
-                                </div>
-                                <div className="flex flex-col">
-                                    {/* Static */}
-                                    <h3 className="text-nowrap">{List.Title}</h3>
-                                    
-                                    <h3>{List.Perusahaan}</h3>
-                                    <div className="flex text-center flex-wrap gap-x-2 gap-y-1">
-                                        <h3 className=" bg-indigo-700 px-2 rounded-full">{List.Alamat}</h3>
+                            <Link prefetch={false} href={`/detail/${Path}/id/${encodeURIComponent(List.name).replace(/ /g,'-')}`} key={i} className="xl:basis-1/3 lg:basis-1/2 basis-full py-2 flex overflow-hidden transition-opacity px-3">
+                                <div className="w-full flex gap-5 bg-blue-300 rounded-2xl overflow-hidden shadow-lg">
+                                    <div className="image shrink-0 w-28 h-32 bg-blue-100 relative">
+                                        <Image src={'/vercel.svg'} 
+                                            alt={List.name} 
+                                            className=" object-cover "
+                                            fill
+                                            sizes="96px"
+                                            priority={false}
+                                            decoding='async'/>
+                                        
+                                    </div>
+                                    <div className="flex flex-col">
+                                        {/* Static */}
+                                        <h3 className="text-nowrap">{List.name}</h3>
+                                        
+                                        <h3>{List.perusahaan}</h3>
+                                        <div className="flex text-center flex-wrap gap-x-2 gap-y-1">
+                                            <h3 className=" bg-indigo-700 px-2 rounded-full">{List.alamat}</h3>
+                                        </div>
                                     </div>
                                 </div>
+                                
                                 
                                 
                             </Link>

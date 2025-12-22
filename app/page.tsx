@@ -6,6 +6,7 @@ import { ListCardComponents } from "@/component/card/ListCard"
 import { HScrollCard } from "@/component/card/HScrollCard"
 import { HScrollCardSkeleton } from "@/component/Skeleton/HScrollCardSkeleton"
 import { Suspense } from "react"
+import prisma from "@/lib/db"
 
 
 export default async function Home() {
@@ -30,99 +31,100 @@ export default async function Home() {
 
   const MagangRes =[
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
   ]
   const Magang1Res =[
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
     {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
+      name :'Magang',
+      imageUrl : 'url',
+      perusahaan : 'perusahaan',
+      alamat : 'alamt'
     },
   ]
 
+  const perusahaan = await prisma.perusahaan.findMany({select:{name:true,alamat:true,deskripsi:true}})
 
   return (
     <>
@@ -135,9 +137,9 @@ export default async function Home() {
       </div>
 
       <div className="bg-blue-100">
-        <h2 className="text-2xl">Daftar PartnerShip Perusahaan</h2>
+        <h2 className="text-2xl">Daftar PartnerShip perusahaan</h2>
         <Suspense fallback={<HScrollCardSkeleton Total={Magang1Res.length}/>}>
-          <HScrollCard DataList={Magang1Res} Path="perusahaan"/>
+          <HScrollCard DataList={perusahaan} Path="perusahaan"/>
         </Suspense>
       </div>
       <div className="bg-blue-100">
@@ -155,9 +157,12 @@ export default async function Home() {
       </div>
       <div className="w-full"></div>
 
-      {/* Search */}
-
       {/* Footer */}
+
+      <div className="w-full bg-sky-800 py-20 px-10 inset-shadow-sm mt-10 flex flex-row flex-wrap justify-around items-center">
+        <div className="">left</div>
+        <div className="">right</div>
+      </div>
       
     </>
     

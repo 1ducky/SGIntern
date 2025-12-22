@@ -22,6 +22,7 @@ model User {
   keahlian      String?
   kelamin       String
   pendidikan    String?
+  alamat        String
   kelas         String
   link          String?
   role          String    @default("Pelajar")
@@ -55,6 +56,21 @@ model Magang {
 
 }
 
+model Lowongan {
+  id           String @id @default(cuid())
+  name         String
+  jurusan      String 
+  keahlian     String
+  deskipsi     String
+
+  perusahaan  Perusahaan  @relation(fields: [perusahaanId], references: [id],onDelete: Cascade)
+  perusahaanId String
+
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+}
+
 model Perusahaan {
   id          String @id @default(cuid())
   name        String
@@ -64,4 +80,7 @@ model Perusahaan {
   createAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Magang      Magang[]
+  Lowongan    Lowongan[]
+
+  @@unique([name, alamat])
 }
