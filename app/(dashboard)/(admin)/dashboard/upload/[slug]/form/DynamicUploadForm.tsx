@@ -1,11 +1,12 @@
 'use client'
 import { notFound } from "next/navigation"
 import { FormType,FormConfig,FieldMeta } from "@/Form.config"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { jurusanText,keahlihan } from "@/StatisData/StatisObj"
 import UploadEntries from "@/app/action/UploadEntries"
 import { useRouter } from "next/navigation"
+import CustomUploader from "@/component/ImageUploader"
 
 
 type DynamicFormProps = {
@@ -94,20 +95,7 @@ function FieldText({ field,type,label }: { field: string, type: string, label : 
     )
 }
 
-function ImageInput () {
-    const fileRef = useRef<HTMLInputElement>(null)
-    return(
-        <>
-            <div className="w-60 h-60 bg-blue-700 rounded-full relative overflow-hidden flex flex-col self-center md:self-start justify-center my-10">
-                <div className="absolute bottom-1/2 right-1/2 translate-1/2 text-white hover:text-black p-10 text-md" onClick={() => fileRef.current?.click()}>
-                    <i className="fa-regular fa-camera"></i>
-                </div>
-                <input type="file" accept="image/*" ref={fileRef} className="hidden"/>
-                <input type="text" name="imageUrl" className="hidden"/>
-            </div>
-        </>
-    )
-}
+
 
 type SelectInputProps =
   | {
@@ -165,6 +153,7 @@ function SelectInput ({ field,label,kind, jurusan, onChange }: SelectInputProps)
 
 export default function DynamicForm ({type} : DynamicFormProps) {
     const [Jurusan, setJurusan] = useState<JurusanType | null>(null)
+    const [isBusy,setisBusy] = useState<boolean>(false)
     const router = useRouter()
 
     if (!type) return notFound()
@@ -200,7 +189,7 @@ export default function DynamicForm ({type} : DynamicFormProps) {
                         case 'image':
                             return (
                                 <li key={i} className="flex flex-col flex-1">
-                                    <ImageInput/>
+                                    <CustomUploader setCondition={setisBusy}/>
                                 </li>
                                 )
                         case 'text':
@@ -260,7 +249,7 @@ export default function DynamicForm ({type} : DynamicFormProps) {
                 
             
             
-            <input type="submit" value="Simpan" className="px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-full" />
+            <input type="submit" value={isBusy ? 'Uploading' : `Simpan`}  className={`px-3 py-2 ${isBusy ? 'bg-blue-600' : 'bg-blue-400'} hover:bg-blue-400 text-white rounded-full`} disabled={isBusy}/>
         </form>
     )
     
