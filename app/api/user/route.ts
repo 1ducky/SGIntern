@@ -10,13 +10,6 @@ function ErrorResponse(message : string, status = 400) {
     })
 }
 
-// Helper function untuk response success
-function SuccessResponse<T>(data: T, status = 200) : Response {
-    return new Response(JSON.stringify(data), {
-        status,
-        headers: { "Content-Type": "application/json" }
-    })
-}
 
 export async function GET() {
     try {
@@ -25,17 +18,10 @@ export async function GET() {
             select: {
                 id: true,
                 name: true,
-                email: true,
-                role: true,
-                jurusan: true,
-                keahlian: true,
-                kelas: true,
-                kelamin : true,
-                pendidikan : true
             }
         })
         
-        return SuccessResponse(Users)
+        return NextResponse.json({status:200, Users})
     } catch (error) {
         // Handler Error
         console.log("GET /api/user error:", error)

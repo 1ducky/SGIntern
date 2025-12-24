@@ -1,11 +1,12 @@
 'use client'
 import { notFound } from "next/navigation"
 import { FormType,FormConfig,FieldMeta } from "@/Form.config"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { jurusanText,keahlihan } from "@/StatisData/StatisObj"
 import UploadEntries from "@/app/action/UploadEntries"
 import { useRouter } from "next/navigation"
+
 
 type DynamicFormProps = {
     type : FormType | undefined
@@ -13,6 +14,66 @@ type DynamicFormProps = {
 }
 
 type JurusanType = typeof jurusanText[number] | null
+type Company = {
+    id: string
+    name: string
+}
+
+function IDSearch () {
+    
+
+    const [query, setQuery] = useState('')
+    const [companies, setCompanies] = useState<Company[]>([])
+    const [selectedCompany, setSelectedCompany] = useState<Company | null>(null)
+
+    useEffect(() => {
+        if (query.length < 2) return
+
+        
+        fetch(`/api/perusahaan?q=${query}`)
+            .then(res => res.json())
+            .then(data => setCompanies(Array.isArray(data?.Perusahaan) ? data.Perusahaan : []))
+        }, [query])
+    
+    return(
+        <>  
+            <label className="text-lg" htmlFor='query'>Perusahaan</label>
+            <input
+                type="text"
+                value={selectedCompany?.name ?? query}
+                onChange={(e) => {
+                    setQuery(e.target.value)
+                    setSelectedCompany(null) // reset kalau ngetik lagi
+                }}
+                placeholder="Ketik nama perusahaan..."
+                className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0"
+                id="query"
+             />
+             {companies.length > 0 && !selectedCompany && (
+                <ul className="border mt-1 max-h-40 overflow-auto rounded-2xl">
+                    {companies.map((company) => (
+                    <li
+                        key={company.id}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => {
+                        setSelectedCompany(company)
+                        setQuery('')
+                        setCompanies([])
+                        }}
+                    >
+                        {company.name}
+                    </li>
+                    ))}
+                </ul>
+                )}
+            <input
+            type="hidden"
+            name="perusahaanId"
+            value={selectedCompany?.id ?? ''}
+            />
+        </>
+    )
+}
 
 
 
@@ -74,25 +135,27 @@ function SelectInput ({ field,label,kind, jurusan, onChange }: SelectInputProps)
     return(
         <>
             <label htmlFor={field} className="text-lg capitalize">{label}</label>
-            <select 
-                name={field} 
-                id={field} className=" focus:outline-0 focus:ring-0 border-0 bg-blue-600 hover:bg-blue-300 text-white p-2 py-1 text-start" 
-                defaultValue="default" 
-                disabled={field === 'keahlian' && !jurusan}
-                onChange={(e) => {
-                if (kind === 'jurusan') {
-                        onChange(e.target.value as JurusanType)
-                    }
-                }}
-            > 
-            <option value="" disabled hidden>
-                Pilih {label}
-            </option>
-                {data.map((List,i) => (
-                    <option key={i} value={List}>{List}</option>
-                    ))
-                }
-            </select>
+            <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                <select 
+                    name={field} 
+                    id={field} className="w-full focus:outline-0 focus:ring-0 border-0 text-xl p-2 py-1 text-start" 
+                    defaultValue="default" 
+                    disabled={field === 'keahlian' && !jurusan}
+                    onChange={(e) => {
+                    if (kind === 'jurusan') {
+                            onChange(e.target.value as JurusanType)
+                        }
+                    }}
+                > 
+                    <option value="" disabled hidden>
+                        Pilih {label}
+                    </option>
+                        {data.map((List,i) => (
+                            <option key={i} value={List}>{List}</option>
+                            ))
+                        }
+                </select>
+            </div>
         </>
     )
     
@@ -176,7 +239,11 @@ export default function DynamicForm ({type} : DynamicFormProps) {
 
                             return null
                         case 'selectid':
-                            return <h2>id</h2>
+                            return( 
+                                <li key={i} className="flex flex-col flex-1">
+                                    <IDSearch/>
+                                </li>
+                            )
                         case 'textarea':
                             return (
                                 <li key={i} className="flex flex-col flex-1">

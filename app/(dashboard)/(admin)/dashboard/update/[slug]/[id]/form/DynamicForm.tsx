@@ -46,6 +46,7 @@ function safeString(value: unknown): string {
 
 
 function TextInput({ field,type,label,defaultvalue} : { field: string, type: string, label : string, defaultvalue: string }) {
+
     return (
         <>
             <label className="text-lg" htmlFor={field}>{label}</label>
@@ -54,6 +55,7 @@ function TextInput({ field,type,label,defaultvalue} : { field: string, type: str
     )
 }
 function FieldText({ field,type,label,defaultvalue }: { field: string, type: string, label : string, defaultvalue: string | null | undefined }) {
+    console.log(defaultvalue)
     return (
         <>
             <label className="text-lg" htmlFor={field}>{label}</label>
@@ -93,7 +95,7 @@ type SelectInputProps =
       kind : 'jurusan'
       label: string
       jurusan: null
-      default: JurusanLiteral | null
+      defaultValue: JurusanLiteral | null
       onChange: (value: JurusanType) => void
     }
   | {
@@ -101,39 +103,43 @@ type SelectInputProps =
       kind : 'keahlian'
       label: string
       jurusan: JurusanType | null
-      default: string | null
+      defaultValue: string | null
       onChange?: never
     }
 
-function SelectInput ({ field,label,kind, jurusan, onChange }: SelectInputProps) {
+function SelectInput ({ field,label,kind, jurusan, onChange, defaultValue }: SelectInputProps) {
 
     const data = field === 'jurusan'
       ? jurusanText
       : jurusan
         ? Object.values(keahlihan[jurusan]).map(value => value.nama)
         : []
+
     return(
         <>
             <label htmlFor={field} className="text-lg capitalize">{label}</label>
-            <select 
-                name={field} 
-                id={field} className=" focus:outline-0 focus:ring-0 border-0 bg-blue-600 hover:bg-blue-300 text-white p-2 py-1 text-start" 
-                defaultValue="default" 
-                disabled={field === 'keahlian' && !jurusan}
-                onChange={(e) => {
-                if (kind === 'jurusan') {
-                        onChange(e.target.value as JurusanType)
+            <div className="py-1 px-2 bg-gray-100 rounded-2xl">
+                <select 
+                    name={field} 
+                    id={field} className="w-full focus:outline-0 focus:ring-0 border-0 p-2 py-1 text-start text-xl" 
+                    defaultValue={!defaultValue ? "default" : defaultValue} 
+                    disabled={field === 'keahlian' && !jurusan}
+                    onChange={(e) => {
+                    if (kind === 'jurusan') {
+                            onChange(e.target.value as JurusanType)
+                        }
+                    }}
+                    
+                > 
+                <option value="" disabled hidden>
+                    Pilih {label}
+                </option>
+                    {data.map((List,i) => (
+                        <option key={i} value={List}>{List}</option>
+                        ))
                     }
-                }}
-            > 
-            <option value="" disabled hidden>
-                Pilih {label}
-            </option>
-                {data.map((List,i) => (
-                    <option key={i} value={List}>{List}</option>
-                    ))
-                }
-            </select>
+                </select>
+            </div>
         </>
     )
     
@@ -143,6 +149,7 @@ function SelectInput ({ field,label,kind, jurusan, onChange }: SelectInputProps)
 
 export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormProps) {
     const [Jurusan, setJurusan] = useState<JurusanType | null>(isJurusanType(defaultValue?.jurusan) ? defaultValue.jurusan : null)
+    console.log(defaultValue)
     const router = useRouter()
 
     if (!type) return notFound()
@@ -182,7 +189,7 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                                     )
                         case 'text':
                             return (
-                                <li key={i} className="flex flex-col flex-1">
+                                <li key={safeString(defaultValue?.[field] as string)} className="flex flex-col flex-1">
                                     <TextInput field={field} defaultvalue={safeString(defaultValue?.[field] as string)} type={Meta.type} label={Meta.label}/>
                                 </li>)
                         case 'select':
@@ -194,7 +201,7 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                                     kind="jurusan"
                                     label={Meta.label}
                                     jurusan={null}
-                                    default={isJurusanType(defaultValue?.jurusan) ? defaultValue.jurusan : null}
+                                    defaultValue={isJurusanType(defaultValue?.jurusan) ? defaultValue.jurusan : null}
                                     onChange={
                                         (value) => {
                                             setJurusan(value as JurusanType)
@@ -211,15 +218,15 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                                     kind="keahlian"
                                     label={Meta.label}
                                     jurusan={Jurusan}
-                                    default={defaultValue?.keahlian || null}
+                                    defaultValue={defaultValue?.keahlian || null}
                                 />
                                 )
                             }
 
                             return null
-                        case 'selectid':
-                            return <h2>id</h2>
                         case 'textarea':
+                            console.log(field)
+                            console.log(safeString(defaultValue?.[field] as string))
                             return (
                                 <li key={i} className="flex flex-col flex-1">
                                     <FieldText field={field} label={Meta.label} type={Meta.type} defaultvalue={safeString(defaultValue?.[field] as string) || null} />
@@ -234,8 +241,10 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
 
                 
             
-            
-            <input type="submit" value="Simpan" className="px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-full" />
+            <div className="w-full justify-end flex flex-col-reverse md:flex-row self-end text-white text-xl gap-5">
+                <button className="bg-red-600 hover:bg-red-300 rounded-full px-3 py-2">Delete</button>
+                <input type="submit" value="Simpan" className="px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-full" />
+            </div>
         </form>
     )
     

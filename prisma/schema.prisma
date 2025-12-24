@@ -45,7 +45,7 @@ model Magang {
   name         String
   jurusan      String 
   keahlian     String
-  deskipsi     String
+  deskripsi     String
 
   perusahaan  Perusahaan  @relation(fields: [perusahaanId], references: [id],onDelete: Cascade)
   perusahaanId String
@@ -61,7 +61,7 @@ model Lowongan {
   name         String
   jurusan      String 
   keahlian     String
-  deskipsi     String
+  deskripsi     String
 
   perusahaan  Perusahaan  @relation(fields: [perusahaanId], references: [id],onDelete: Cascade)
   perusahaanId String

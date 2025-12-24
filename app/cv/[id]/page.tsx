@@ -70,7 +70,10 @@ export default async function StaticCV ({params}:Props){
                     <h2 className="text-xl font-bold tracking-widest border-b-2 border-[#2c4c58] mb-4 pb-1 uppercase">Riwayat Pemdidikan</h2>
                     <ul className="list-disc list-outside ml-5 space-y-2 text-sm">
                         {userData?.pendidikan?.trim().split('+').map((item,i) => (
-                            <h3 key={i}>{item}</h3>
+                            <li key={i}>
+                                <a href={`https://www.google.com/search?q=${item}`}>{item}</a>
+                            
+                            </li>
                         ))}
                     </ul>
                 </div>

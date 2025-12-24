@@ -1,5 +1,6 @@
-'use client'
+
 import DashboardList from "@/component/DashboardList"
+import prisma from "@/lib/db"
 import Link from "next/link"
 
 type MagangRow = {
@@ -19,29 +20,25 @@ type Column<T> = {
   render?: (value: T[keyof T], row: T) => React.ReactNode
 }
 
-export default function DashboardMagang () {
-    const res=[
-        {
-            id:'id',
-            name:'name',
-            jurusan:'jurusan',
-            keahlian:'keahlian',
+export default async function DashboardMagang ({searchParams} : {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
+    const query = await searchParams
+    const order = query.order === 'desc' || query.order === 'asc' ? query.order : 'asc'
+    const magang = await prisma.magang.findMany({
+        select:{
+            id:true,
+            name:true,
+            jurusan:true,
+            keahlian:true,
             perusahaan:{
-                name:'name',
-                alamat:'alamat'
+                select:{
+                    name:true,
+                    alamat:true
+                }
             }
-        },
-        {   
-            id:'id',
-            name:'name',
-            jurusan:'jurusan',
-            keahlian:'keahlian',
-            perusahaan:{
-                name:'name',
-                alamat:'alamat'
-            }
-        },
-    ]
+            
+        },orderBy:{createAt:order},
+        
+    })
 
     const MagangColumns: Column<MagangRow>[] = [
     { key: 'id', label: 'ID' },
@@ -73,7 +70,7 @@ export default function DashboardMagang () {
                     <input type="text" placeholder="Cari..."  className=" p-1 px-2 w-sm rounded-full focus:outline-0 focus:ring-0 border-0  md:block hidden"/>
                 </div>
             </div>
-            <DashboardList Head={MagangColumns} Items={res} Path="magang"/>
+            <DashboardList Head={MagangColumns} Items={magang} Path="magang"/>
         </div>
     )
 }

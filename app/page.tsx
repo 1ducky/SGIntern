@@ -125,6 +125,12 @@ export default async function Home() {
   ]
 
   const perusahaan = await prisma.perusahaan.findMany({select:{name:true,alamat:true,deskripsi:true}})
+  // const res = await fetch('http://localhost:3000/api/user', {
+  // })
+
+  // const data = await res.json()
+  // console.log(data)
+
 
   return (
     <>
