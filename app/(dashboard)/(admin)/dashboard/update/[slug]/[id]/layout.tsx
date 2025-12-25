@@ -37,7 +37,7 @@ function isSLugType(value: unknown): value is SlugType {
 
 async function GetPerusahaan(id:string) {
     try{
-        const res = await prisma.perusahaan.findFirst({where:{id},select:{alamat:true,name:true,deskripsi:true}})
+        const res = await prisma.perusahaan.findFirst({where:{id},select:{alamat:true,name:true,deskripsi:true,imageUrl:true}})
         return res
     }catch{
         return null

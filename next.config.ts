@@ -6,7 +6,12 @@ images: {
       {
         protocol: 'https',
         hostname: 'img.clerk.com',
-        pathname: '/**', // opsional, gunakan untuk menentukan path yang diizinkan
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ufnqref5sv.ufs.sh',
+        pathname: '/**',
       },
     ],
   },

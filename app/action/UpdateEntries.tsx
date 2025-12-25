@@ -13,7 +13,7 @@ type Datas = {
     keahlian? : string
     perusahaanId? : string
     alamat? : string
-    imageurl? : string
+    imageUrl? : string
 }
 
 type UpdateResponse = {
@@ -32,7 +32,7 @@ async function UpdatePerusahaan(data:Datas,id:string):Promise<UpdateResponse> {
     try{
         const existing = await prisma.perusahaan.findFirst({where:{
             id
-        }  , select:{name:true,alamat:true,deskripsi:true}
+        }  , select:{name:true,alamat:true,deskripsi:true,imageUrl:true}
         })
         if (!existing) {
             return {
@@ -44,7 +44,8 @@ async function UpdatePerusahaan(data:Datas,id:string):Promise<UpdateResponse> {
         const isSame = 
             existing.name === data.name &&
             existing.alamat === data.alamat &&
-            existing.deskripsi === data.deskripsi
+            existing.deskripsi === data.deskripsi &&
+            existing.imageUrl === data.imageUrl
 
         if(isSame) return {
             status: 400,
@@ -56,7 +57,8 @@ async function UpdatePerusahaan(data:Datas,id:string):Promise<UpdateResponse> {
             data:{
                 name:data.name,
                 alamat:data.alamat,
-                deskripsi:data.deskripsi || null
+                deskripsi:data.deskripsi || null,
+                imageUrl: data.imageUrl
             }
         })
         if(!res){

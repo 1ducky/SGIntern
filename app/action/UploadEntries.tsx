@@ -13,7 +13,7 @@ type Datas = {
     keahlian? : string
     perusahaanId? : string
     alamat? : string
-    imageurl? : string
+    imageUrl? : string
 }
 
 type UploadResponse = {
@@ -40,12 +40,17 @@ async function UploadPerusahaan(data:Datas):Promise<UploadResponse> {
                 message: 'Perusahaan sudah terdaftar'
             }
         }
+        if(!data.imageUrl) return{
+            status:401,
+            message:'Foto Profile Belum Dipilih'
+        }
 
         const res = await prisma.perusahaan.create({
             data:{
                 name:data.name,
                 alamat:data.alamat,
-                deskripsi:data.deskripsi || null
+                deskripsi:data.deskripsi || null,
+                imageUrl:data.imageUrl || ''
             }
         })
         if(!res){

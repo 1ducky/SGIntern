@@ -164,8 +164,7 @@ export default function DynamicForm ({type} : DynamicFormProps) {
 
     async function onSubmitDatas(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-
+            const formData = new FormData(e.currentTarget)
             const data = Object.fromEntries(formData) 
             // console.log(data)
             const res = await UploadEntries(type,data)
@@ -244,12 +243,9 @@ export default function DynamicForm ({type} : DynamicFormProps) {
                     }
                     })}
             </ul>
-            
-
-                
-            
-            
-            <input type="submit" value={isBusy ? 'Uploading' : `Simpan`}  className={`px-3 py-2 ${isBusy ? 'bg-blue-600' : 'bg-blue-400'} hover:bg-blue-400 text-white rounded-full`} disabled={isBusy}/>
+            <div className="w-full justify-end flex flex-col-reverse md:flex-row self-end text-white text-xl gap-5">
+                <input type="submit"value={isBusy ? 'Uploading' : `Simpan`}  className={`px-3 py-2 ${isBusy ? 'bg-blue-600' : 'bg-blue-400'} hover:bg-blue-200 text-white rounded-full`}  disabled={isBusy}/>
+            </div>
         </form>
     )
     

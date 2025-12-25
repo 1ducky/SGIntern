@@ -76,6 +76,7 @@ model Perusahaan {
   name        String
   alamat      String
   deskripsi   String?
+  imageUrl    String
 
   createAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt

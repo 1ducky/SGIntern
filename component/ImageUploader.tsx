@@ -7,10 +7,12 @@ import Image from "next/image"
 
 export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : string | null,setCondition : React.Dispatch<React.SetStateAction<boolean>>}) {
     // defaultUrl exemple = "https://cdn.com/name|key"
+    console.log(defaultUrl)
     const [file, setFile] = useState<File | null>(null)
     const [imageUrl,setimageUrl] = useState<string | null>(defaultUrl ? defaultUrl : null)
     const [isUpload,setisUpload] = useState<boolean>(!imageUrl ? true : false) //'true : upload, false : update'
     const [isProcess, setisProcess] = useState<boolean>(false)
+    console.log(imageUrl?.split('|')[0])
 
     useEffect(() => {
 
@@ -73,6 +75,8 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
       ? imageUrl.split("|")[0]
       : ''
 
+    console.log(previewUrl)
+
     return (
         <>
         
@@ -85,16 +89,16 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
                     disabled={isUploading}
                     className="hidden"
                 />
-                {file && (
+                
                 <Image src={previewUrl} alt="preview" sizes="100px" quality={80} fill className="absolute"/>
-                )}
-                <button className="absolute bottom-1/2 right-1/2 translate-1/2 text-blue-300 hover:text-blue-100 font-medium p-10 text-md flex flex-col items-center"  onClick={() => fileRef.current?.click()} disabled={isUploading}>
+                
+                <button className="absolute bottom-1/2 right-1/2 translate-1/2 text-blue-300 hover:text-blue-100 font-medium p-10 text-md flex flex-col items-center" type="button" onClick={() => fileRef.current?.click()} disabled={isUploading}>
                     <i className="fa-regular fa-camera text-center"></i>
                     <h3 className="text-center">{isUploading || isProcess ? "Uploading..." : "Upload"}</h3>
                 </button>
             </div>
             {/* fallback value */}
-            <input type="text" name="imageUrl" id="imageUrl" value={imageUrl || ''} className="hidden"/>
+            <input type="text" name="imageUrl" id="imageUrl" defaultValue={imageUrl || ''} className=""/>
         
         </>
     );

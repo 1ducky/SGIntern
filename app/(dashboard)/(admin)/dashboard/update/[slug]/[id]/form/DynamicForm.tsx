@@ -1,12 +1,12 @@
 'use client'
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import { FormType,FormConfig,FieldMeta } from "@/Form.config"
-import { useRef, useState } from "react"
+import { useState } from "react"
 
 import { jurusanText,keahlihan } from "@/StatisData/StatisObj"
 import UpdateEntries from "@/app/action/UpdateEntries"
 import { useRouter } from "next/navigation"
+import CustomUploader from "@/component/ImageUploader"
 
 type DB ={
         id? : string | null,
@@ -64,30 +64,6 @@ function FieldText({ field,type,label,defaultvalue }: { field: string, type: str
     )
 }
 
-function ImageInput ({ImageUrl} : {ImageUrl? : string | null}) {
-    const fileRef = useRef<HTMLInputElement>(null)
-    return(
-        <>
-            <div className="w-60 h-60 bg-blue-700 rounded-full relative overflow-hidden flex flex-col self-center md:self-start justify-center my-10">
-                <div className="absolute bottom-1/2 right-1/2 translate-1/2 text-white hover:text-black p-10 text-md" onClick={() => fileRef.current?.click()}>
-                    <i className="fa-regular fa-camera"></i>
-                </div>
-                {ImageUrl && (
-                    <Image
-                    src={ImageUrl ?? ""}
-                    alt="Profile"
-                    fill
-                    sizes="100px"
-                    quality={75}
-                />
-                )}
-                
-                <input type="file" accept="image/*" ref={fileRef} className="hidden"/>
-                <input type="text" name="imageUrl" className="hidden"/>
-            </div>
-        </>
-    )
-}
 
 type SelectInputProps =
   | {
@@ -149,6 +125,7 @@ function SelectInput ({ field,label,kind, jurusan, onChange, defaultValue }: Sel
 
 export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormProps) {
     const [Jurusan, setJurusan] = useState<JurusanType | null>(isJurusanType(defaultValue?.jurusan) ? defaultValue.jurusan : null)
+    const [isBusy,setisBusy] = useState<boolean>(false)
     console.log(defaultValue)
     const router = useRouter()
 
@@ -184,7 +161,9 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                     switch(Meta.type) {
                         case 'image':
                             return (
-                                    <ImageInput key={i} />
+                                    <li key={i} className="flex flex-col flex-1">
+                                        <CustomUploader setCondition={setisBusy} defaultUrl={defaultValue?.imageUrl}/>
+                                    </li>
                                 
                                     )
                         case 'text':
@@ -242,8 +221,8 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                 
             
             <div className="w-full justify-end flex flex-col-reverse md:flex-row self-end text-white text-xl gap-5">
-                <button className="bg-red-600 hover:bg-red-300 rounded-full px-3 py-2">Delete</button>
-                <input type="submit" value="Simpan" className="px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-full" />
+                <button type='button' className="bg-red-600 hover:bg-red-300 rounded-full px-3 py-2">Hapus</button>
+                <input type="submit"value={isBusy ? 'Uploading' : `Simpan`}  className={`px-3 py-2 ${isBusy ? 'bg-blue-600' : 'bg-blue-400'} hover:bg-blue-200 text-white rounded-full`}  disabled={isBusy}/>
             </div>
         </form>
     )
