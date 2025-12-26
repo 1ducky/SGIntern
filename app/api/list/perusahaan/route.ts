@@ -21,7 +21,8 @@ export async function GET(req: Request) {
             select: {
                 name:true,
                 id:true,
-                imageUrl:true
+                imageUrl:true,
+                alamat:true
             }
         })
 

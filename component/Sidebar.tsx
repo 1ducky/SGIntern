@@ -7,8 +7,6 @@ interface SideBarProp {
 
 export const SideBar = ({Condition} : SideBarProp) => {
 
-    const CurrentDate = new Date()
-    const CurrentYear = CurrentDate.getFullYear()
 
     return(
         <div className={`text-white fixed bg-indigo-900 w-9/12 xl:w-auto px-5 py-5 pb-5 h-screen flex flex-col justify-between z-39 transition-all duration-300 ${ Condition ? 'left-0' : '-left-full'}`}>
@@ -23,10 +21,7 @@ export const SideBar = ({Condition} : SideBarProp) => {
                 </div>
             </div>
             
-            <footer className="text-center  mb-20 mx-auto">
-                <h2 >SGIntern {CurrentYear}©</h2>
-                <small className="">Bersama Kita Bisa</small>
-            </footer>
+
         </div>
 
             

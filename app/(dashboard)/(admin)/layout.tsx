@@ -45,7 +45,6 @@ export default async function DashboardLayout({children} : {children : React.Rea
                 <Link prefetch={false} href={'/dashboard'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Dashboard</Link>
                 <Link prefetch={false} href={'/dashboard/magang'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Magang</Link>
                 <Link prefetch={false} href={'/dashboard/lowongan'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Lowongan</Link>
-                <Link prefetch={false} href={'/dashboard/gelombang'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Gelombang</Link>
                 <Link prefetch={false} href={'/dashboard/perusahaan'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Perusahaan</Link>
             </ul>
             <div className="flex-1">

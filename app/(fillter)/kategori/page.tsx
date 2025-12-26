@@ -1,70 +1,9 @@
 import { HScrollCard } from "@/component/card/HScrollCard"
 import { HScrollCardSkeleton } from "@/component/Skeleton/HScrollCardSkeleton"
+import { cacheLife } from "next/cache"
 import Link from "next/link"
 import { Suspense } from "react"
 
-const Magang1Res =[
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magangasssssssssssssssasssssssssssssssssssss',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-]
 
 export default function DetailPage () {
     return (
@@ -110,14 +49,53 @@ export default function DetailPage () {
                 
             </div>
             <h2 className="text-2xl">Daftar Magang</h2>
-            <Suspense fallback={<HScrollCardSkeleton Total={Magang1Res.length}/>}>
-                <HScrollCard DataList={Magang1Res} Path="magang"/>
+            <Suspense fallback={<HScrollCardSkeleton Total={6}/>}>
+                <MagangDisplay/>
             </Suspense>
-            <h2 className="text-2xl">Daftar Lowongan</h2>
-            <Suspense fallback={<HScrollCardSkeleton Total={Magang1Res.length}/>}>
-                <HScrollCard DataList={Magang1Res} Path="perusahaan"/>
+            <h2 className="text-2xl">Daftar perusahaan</h2>
+            <Suspense fallback={<HScrollCardSkeleton Total={6}/>}>
+                <PerusahaanDisplay/>
             </Suspense>
 
         </div>
     )
+}
+
+async function MagangDisplay() {
+  'use cache'
+  cacheLife('minutes')
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
+  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc`, {
+      next:{revalidate:60}
+  })
+
+  const data = await res.json()
+  console.log(data)
+  
+
+  return(
+    <>
+      <HScrollCard DataList={data} Path='magang'/>
+    </>
+  )
+}
+
+async function PerusahaanDisplay() {
+  'use cache'
+  cacheLife('minutes')
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
+  const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc`, {
+      next:{revalidate:60}
+  })
+
+  const data = await res.json()
+  
+
+  return(
+    <>
+      <HScrollCard DataList={data} Path='perusahaan'/>
+    </>
+  )
 }

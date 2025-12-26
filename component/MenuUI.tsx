@@ -36,7 +36,7 @@ export const MenuUi = () => {
     const {signOut} = useClerk()
     return(
         <>
-            <div className="fixed top-0 left-0 flex flex-row justify-between w-screen h-20 p-5 bg-blue-800/50 z-40 text-white">
+            <div className="fixed top-0 left-0 flex flex-row justify-between w-screen h-20 p-5 bg-blue-950 z-40 text-white">
                 <div className="flex flex-row gap-5 flex-nowrap items-center">
                     <button onClick={() => StateHandler('SideBar')} className="w-10 h-10 bg-blue-700 rounded-full text-center block xl:hidden"><i className="fa-solid fa-bars"></i></button>
                     <Link href={'/'} className="w-40 h-full relative">
@@ -54,7 +54,7 @@ export const MenuUi = () => {
                         <li><Link  className="text-xl pr-10" href={'/partnership'} prefetch={false}><i className="fa-solid fa-handshake"></i> PartnerShip</Link></li>
                     </ul>
                     {/* Search Component */}
-                    <div className="bg-blue-700  mx-5  overflow-hidden rounded-full flex flex-row items-center justify-center">
+                    <div className="bg-blue-900  mx-5  overflow-hidden rounded-full flex flex-row items-center justify-center">
                         <div className="w-10 h-10 flex justify-center items-center">
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </div>
