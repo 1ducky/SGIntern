@@ -1,4 +1,13 @@
-import { ListCardComponents } from "@/component/card/ListCard";
+import { ListCardComponents2 } from "@/component/card/CardList2";
+
+import FilterQuery from "@/component/csr/FilterQuery";
+import KeywordQuery from "@/component/csr/KeywordQuery";
+import { Pagination } from "@/component/csr/Pagination";
+
+import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton";
+import { jurusanText } from "@/StatisData/StatisObj";
+
+import { Suspense } from "react";
 
 
 
@@ -6,6 +15,12 @@ import { ListCardComponents } from "@/component/card/ListCard";
 type Props = {
   params: {
     slug: string
+  },
+  searchParams : {
+    jurusan? : string
+    q? : string
+    page? : string 
+    
   }
 }
 
@@ -16,9 +31,12 @@ export async function generateStaticParams() {
     return StaticParams.map( slug => ({slug : slug.toLowerCase()}))
 }
 
+
 export async function generateMetadata( {params} : Props ){
     const {slug} = await params
     const clean = slug.toLowerCase()
+
+
     
     return {
         title: `${clean.replace(/-/g,' ')}`,
@@ -33,50 +51,64 @@ export async function generateMetadata( {params} : Props ){
 }
 
 
-export default async function KategoriPage ( {params} : Props ) {
+export default async function KategoriPage ( {params,searchParams} : Props ) {
   const {slug} = await params
-
-  const MagangRes =[
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-    {
-      Title :'Magang',
-      Image : 'url',
-      Perusahaan : 'Perusahaan',
-      Alamat : 'alamt'
-    },
-  ]
+  const clean = slug.toLowerCase()
+  const query = (await searchParams)?.q || ''
+  const jurusan = (await searchParams)?.jurusan || ''
+  const Page = Number((await searchParams)?.page || 1)  
+  const Limit=15
+  const Offset= Limit * Math.max(Page-1,0)
 
   return (
-    <div className="basis-full overflow-y-scroll">
-      <div className="w-full flex flex-col items-center p-5 gap-5">
-        <h2 className="self-start md:text-2xl text-lg text-blue-600 my-5">Hasil Ketegori {slug}: </h2>
+      <>
+        <div className="bg-white md:px-20 px-10 mt-10 py-10">
+          <h2 className="text-2xl capitalize font-medium">Daftar {slug}</h2>
+          
+          <FilterComponent query={query} jurusan={jurusan} TypeQuery={clean}/>
+        </div>
+        <div className=" md:px-20 px-10 mt-10 ">
+          
+
+          <Suspense fallback={<ListCardSkeleton Total={10}/>}>
+            <QueryDisplay limit={Limit} offset={Offset} endpoint={clean} query={query} jurusan={jurusan} page={Page}/>
+          </Suspense>
+        </div>
+      </>
+      
+
+  )
+}
 
 
+async function QueryDisplay({limit,offset,query,endpoint,jurusan,page}:{limit:number,offset:number,query?:string,endpoint:string,jurusan? : string,page:number}) {
+  console.log(limit,offset,query,endpoint,jurusan )
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
+  const res = await fetch(`${baseUrl}/api/list/${endpoint}?order[createAt]=desc&limit=${limit}&offset=${offset}${query ? `&query=${query}` : ''}${jurusan ? `&order[jurusan]=${jurusan}` : ''}`, {
+      next:{revalidate:60}
+  })
+
+  const {data,total} = await res.json()
+  const TotalPage = Math.ceil(total/limit)
+
+  return(
+    <>
+      <h2 className="capitalize my-5">Ditemukan {total} {endpoint} </h2>
+      <ListCardComponents2 DataList={data} Path='perusahaan'/>
+      <Pagination Page={page} Total={TotalPage}/>
+    </>
+  )
+}
+
+async function FilterComponent({query,TypeQuery} : {query? : string,jurusan?:string, TypeQuery:string}) {
+
+  return (
+    <>
+      <div className="py-1 flex flex-row justify-start gap-2 my-5">
+          {TypeQuery !== 'perusahaan' && <FilterQuery jurusanText={jurusanText} defaultfilter={query}/>}
+          <KeywordQuery defaultQuery={query}/>
       </div>
-      <ListCardComponents DataList={MagangRes} Path={slug}/>
-    </div>
+    </>
   )
 }

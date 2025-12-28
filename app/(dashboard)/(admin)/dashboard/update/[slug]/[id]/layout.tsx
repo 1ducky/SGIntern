@@ -37,7 +37,7 @@ function isSLugType(value: unknown): value is SlugType {
 
 async function GetPerusahaan(id:string) {
     try{
-        const res = await prisma.perusahaan.findFirst({where:{id},select:{alamat:true,name:true,deskripsi:true,imageUrl:true}})
+        const res = await prisma.perusahaan.findFirst({where:{id},select:{alamat:true,name:true,deskripsi:true,imageUrl:true,id:true}})
         return res
     }catch{
         return null
@@ -45,7 +45,7 @@ async function GetPerusahaan(id:string) {
 }
 async function GetMagang(id:string) {
     try{
-        const res = await prisma.magang.findFirst({where:{id},select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true}})
+        const res = await prisma.magang.findFirst({where:{id},select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true,id:true}})
         return res
     }catch{
         return null
@@ -53,7 +53,7 @@ async function GetMagang(id:string) {
 }
 async function GetLowongan(id:string) {
     try{
-        const res = await prisma.lowongan.findFirst({where:{id},select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true}})
+        const res = await prisma.lowongan.findFirst({where:{id},select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true,id:true}})
         return res
     }catch{
         return null

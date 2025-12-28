@@ -69,6 +69,104 @@ async function UpdatePerusahaan(data:Datas,id:string):Promise<UpdateResponse> {
         return {status:400, message: 'Error Internal'}
     }
 }
+async function UpdateLowongan(data:Datas,id:string):Promise<UpdateResponse> {
+    if (!data.name || !id) {
+        return {
+            status: 400,
+            message: 'Data Yang Diperlukan Tidak Ditemukan'
+        }
+    }
+    try{
+        const existing = await prisma.lowongan.findFirst({where:{
+            id
+        }  , select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true}
+        })
+        if (!existing) {
+            return {
+                status: 409,
+                message: 'Perusahaan tidak terdaftar'
+            }
+        }
+
+        const isSame = 
+            existing.name === data.name &&
+            existing.deskripsi === data.deskripsi &&
+            existing.jurusan === data.jurusan && 
+            existing.keahlian === data.keahlian
+
+        if(isSame) return {
+            status: 400,
+            message:'Tidak Ada Perubahan Data'
+        }
+
+        
+
+        const res = await prisma.lowongan.update({
+            where:{ id },
+            data:{
+                name:data.name,
+                deskripsi:data.deskripsi,
+                jurusan: data.jurusan,
+                keahlian: data.keahlian
+            }
+        })
+        if(!res){
+            return {status: 409, message:'Gagal Update'}
+        }
+        return {status : 200, message:'Berhasil Update'}
+    }catch{
+        return {status:400, message: 'Error Internal'}
+    }
+}
+async function UpdateMagang(data:Datas,id:string):Promise<UpdateResponse> {
+    if (!data.name || !id) {
+        return {
+            status: 400,
+            message: 'Data Yang Diperlukan Tidak Ditemukan'
+        }
+    }
+    try{
+        const existing = await prisma.magang.findFirst({where:{
+            id
+        }  , select:{name:true,deskripsi:true,jurusan:true,keahlian:true,perusahaanId:true}
+        })
+        if (!existing) {
+            return {
+                status: 409,
+                message: 'Perusahaan tidak terdaftar'
+            }
+        }
+
+        const isSame = 
+            existing.name === data.name &&
+            existing.deskripsi === data.deskripsi &&
+            existing.jurusan === data.jurusan && 
+            existing.keahlian === data.keahlian
+
+        if(isSame) return {
+            status: 400,
+            message:'Tidak Ada Perubahan Data'
+        }
+
+        
+
+        const res = await prisma.magang.update({
+            where:{ id },
+            data:{
+                name:data.name,
+                deskripsi:data.deskripsi,
+                jurusan: data.jurusan,
+                keahlian: data.keahlian
+            }
+        })
+        if(!res){
+            return {status: 409, message:'Gagal Update'}
+        }
+        return {status : 200, message:'Berhasil Update'}
+    }catch{
+        return {status:400, message: 'Error Internal'}
+    }
+}
 
 export default async function UpdateEntries(Type:FormType,Datas:Datas,id:string):Promise<UpdateResponse>{
 
@@ -76,9 +174,9 @@ export default async function UpdateEntries(Type:FormType,Datas:Datas,id:string)
 
     switch (Type){
         case 'lowongan':
-            return  {status:200, message:'Lowongan'}
+            return  UpdateLowongan(Datas,id)
         case 'magang':
-            return {status:200, message:'Magang'}
+            return UpdateMagang(Datas,id)
         case 'perusahaan':
             return UpdatePerusahaan(Datas,id)
         default:

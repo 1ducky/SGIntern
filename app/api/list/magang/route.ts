@@ -9,6 +9,7 @@ import parseSearch from '@/utils/ApiUtils/QueryParse'
 // type
 import { FILTERABLE_FIELDS } from "@/StatisData/StaticType"
 import { FilterField } from "@/StatisData/StaticType"
+import { parsePagination } from '@/utils/ApiUtils/PaginationParse'
 
 export default function parseFilters(searchParams: URLSearchParams) : Prisma.MagangWhereInput | undefined {
     const where: Prisma.MagangWhereInput = {}
@@ -32,16 +33,19 @@ export async function GET(req: Request) {
     const orderBy = parseOrderBy(searchParams)
     const filter = parseFilters(searchParams)
     const search = parseSearch(searchParams)
+    const pagination = parsePagination(searchParams)
     try{
-        const data = await prisma.magang.findMany({
+        const [data,total] = await Promise.all([prisma.magang.findMany({
             where: {
             ...filter,
             ...search,
             },
             orderBy,
+            ...pagination,
             select: {
                 name:true,
                 id:true,
+                deskripsi:true,
                 perusahaan:{
                     select:{
                         id:true,
@@ -51,13 +55,12 @@ export async function GET(req: Request) {
                     }
                 }
             }
-        })
+        }),prisma.magang.count({where:{ ...filter,...search}})])
 
-        return NextResponse.json(data)
-    }catch(error){
+        return NextResponse.json({data,total})
+    }catch{
                 // Handler Error
-        console.log("GET /api/user error:", error)
-        return NextResponse.json({message:"Gagal Mengambil Daftar Lowongan", status:500})
+        return NextResponse.json({message:"Gagal Mengambil Daftar Magang", status:500})
     }
 
       

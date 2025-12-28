@@ -35,7 +35,7 @@ export default async function StaticCV ({params}:Props){
     }catch{
         return notFound()
     }
-    if(!userData?.jurusan) return <h2>User Belum Membuat CV</h2>
+    if(!userData?.jurusan) return notFound()
 
     type Jurusantype = typeof jurusanText[number]
     

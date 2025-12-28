@@ -3,14 +3,13 @@ import { CorousselComponent } from "@/component/Coroussel"
 import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton"
 import { ListCardComponents } from "@/component/card/ListCard"
 
-import { HScrollCard } from "@/component/card/HScrollCard"
-import { HScrollCardSkeleton } from "@/component/Skeleton/HScrollCardSkeleton"
 import { Suspense } from "react"
 
 import Link from "next/link"
 import { getRandomItem } from "@/utils/getRandomIndex"
 import { jurusanText } from "@/StatisData/StatisObj"
-import { cacheLife } from "next/cache"
+import { ListCardComponents2 } from "@/component/card/CardList2"
+
 
 
 export default async function Home() {
@@ -37,28 +36,28 @@ export default async function Home() {
   return (
     <>
       <CorousselComponent Information={InformationRes}/>
-      <div className="bg-blue-100">
+      <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10">
         <h2 className="text-2xl">Daftar Magang</h2>
         <Suspense fallback={<ListCardSkeleton Total={6}/>}>
           <MagangDisplay/>
         </Suspense>
       </div>
 
-      <div className="bg-blue-100">
+      <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
         <h2 className="text-2xl">Daftar PartnerShip perusahaan</h2>
-        <Suspense fallback={<HScrollCardSkeleton Total={10}/>}>
+        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
           <PerusahaanDisplay/>
         </Suspense>
       </div>
-      <div className="bg-blue-100">
+      <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10">
         <h2 className="text-2xl">Daftar Lowongan Pekerjaan</h2>
-        <Suspense fallback={<HScrollCardSkeleton Total={10}/>}>
+        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
           <LowonganDisplay/>
         </Suspense>
       </div>
-      <div className="bg-blue-100">
+      <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
         <h2 className="text-2xl">Daftar Magang Jurusan Acak</h2>
-        <Suspense fallback={<HScrollCardSkeleton Total={10}/>}>
+        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
           <RandomMagangDisplay/>
         </Suspense>
       </div>
@@ -169,16 +168,13 @@ export default async function Home() {
 }
 
 async function MagangDisplay() {
-  'use cache'
-  cacheLife('minutes')
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc`, {
-      next:{revalidate:60}
+  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=asc`, {
+    next:{revalidate:60}
   })
 
-  const data = await res.json()
-  console.log(data)
+  const {data} = await res.json()
   
 
   return(
@@ -188,26 +184,24 @@ async function MagangDisplay() {
   )
 }
 async function PerusahaanDisplay() {
-  'use cache'
-  cacheLife('minutes')
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc`, {
       next:{revalidate:60}
   })
 
-  const data = await res.json()
+  const {data} = await res.json()
   
 
   return(
     <>
-      <HScrollCard DataList={data} Path='perusahaan'/>
+      <ListCardComponents2 DataList={data} Path='perusahaan'/>
     </>
   )
 }
 async function LowonganDisplay() {
-  'use cache'
-  cacheLife('minutes')
+
   
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
@@ -215,32 +209,31 @@ async function LowonganDisplay() {
       next:{revalidate:60}
   })
 
-  const data = await res.json()
+  const {data} = await res.json()
   
 
   return(
     <>
-      <HScrollCard DataList={data} Path='lowongan'/>
+      <ListCardComponents2 DataList={data} Path='lowongan'/>
     </>
   )
 }
 async function RandomMagangDisplay() {
-    'use cache'
-    cacheLife('minutes')
+
     
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    const Random = getRandomItem(jurusanText)
+    // const Random = getRandomItem(jurusanText)
 
-    const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&order[jurusan]=${Random}`, {
+    const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&order[jurusan]=TMI`, {
         next:{revalidate:60}
     })
 
-    const data = await res.json()
+    const {data} = await res.json()
     
 
     return(
       <>
-        <HScrollCard DataList={data} Path='magang'/>
+        <ListCardComponents2 DataList={data} Path='magang'/>
       </>
     )
 }

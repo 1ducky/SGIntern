@@ -1,4 +1,5 @@
 
+import KeywordQuery from "@/component/csr/KeywordQuery"
 import DashboardList from "@/component/DashboardList"
 import prisma from "@/lib/db"
 import Link from "next/link"
@@ -24,7 +25,11 @@ export default  async function DashboardLowongan ({searchParams} : {searchParams
 
     const query = await searchParams
     const order = query.order === 'desc' || query.order === 'asc' ? query.order : 'asc'
+    const Search = typeof query.q === 'string'
+                    ? query.q
+                    : ''
     const lowongan = await prisma.lowongan.findMany({
+        where:{name:{contains:Search,mode:'insensitive'}},
         select:{
             id:true,
             name:true,
@@ -38,6 +43,7 @@ export default  async function DashboardLowongan ({searchParams} : {searchParams
             }
             
         },orderBy:{createAt:order},
+        take:20
         
     })
 
@@ -65,13 +71,7 @@ export default  async function DashboardLowongan ({searchParams} : {searchParams
             <div className="px-5 py-3 rounded-2xl flex flex-row gap-5">
                 <Link href={'/dashboard/upload/lowongan'} prefetch={false} className="px-3 py-1 bg-blue-100 rounded-2xl">Tambahkan</Link>
                 <Link href={`/dashboard/lowongan?order=${ order == 'asc' ? 'desc': 'asc'}`} className="px-3 py-1 bg-blue-100 rounded-2xl">Urutkan</Link>
-                <div className="bg-blue-100 overflow-hidden rounded-full flex flex-row items-center justify-center">
-                    <div className="w-10 h-10 flex justify-center items-center">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    
-                    <input type="text" placeholder="Cari..."  className=" p-1 px-2 w-sm rounded-full focus:outline-0 focus:ring-0 border-0  md:block hidden"/>
-                </div>
+                <KeywordQuery defaultQuery={Search}/>
             </div>
             <DashboardList Head={LowonganColumns} Items={lowongan} Path="lowongan"/>
         </div>

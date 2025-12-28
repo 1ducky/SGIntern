@@ -227,7 +227,7 @@ export default function SettingsPage ()  {
                     </div>
                     <input type="file" accept="image/*" ref={fileRef} onChange={onChangeImage}/>
                 </div>
-                <div className="flex flex-col justify-start">
+                <div className="flex flex-col justify-start gap-3">
                     <h2 className="sm:text-nowrap text-wrap text-start text-3xl lg:text-5xl">Selamat Datang <br /> {userData?.name || AuthUser?.username || AuthUser?.fullname || 'Loading'}</h2>
                     <h3 className="text-2xl text-start">{AuthUser?.email}</h3>
                     <h3 className="text-2xl text-start">{userData?.role?.toLowerCase() == 'admin' ? <Link prefetch={false} className="capitalize text-blue-500 hover:text-blue-300" href={'/dashboard'}>{userData?.role} Dashboard</Link> : 'Pelajar'}</h3>
@@ -235,15 +235,15 @@ export default function SettingsPage ()  {
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit}  className="flex flex-row flex-wrap gap-5 justify-between">
+            <form onSubmit={handleSubmit}  className="flex flex-row flex-wrap gap-5 justify-between pb-20">
                 {/* Text Input */}
-                <div className="flex flex-col justify-start gap-3 flex-1">
+                <div className="flex flex-col justify-start md:gap-3 gap-5 flex-1">
                     <label className="text-lg" htmlFor="nama">Nama Lengkap</label>
                     <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0 " type="text" name="nama" id="nama" placeholder="Harap Masukan Nama Lengkap Yang benar" defaultValue={`${userData?.name || ''}`} required />
 
                     <label className="text-lg" htmlFor="kelas">Kelas</label>
-                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
-                        <select name="kelas" id="kelas" defaultValue={userData?.kelas || ''} required className="w-full">
+                    <div className="p-3 bg-gray-100 rounded-4xl">
+                        <select name="kelas" id="kelas" defaultValue={userData?.kelas || ''} required className="w-full focus:outline-0 focus:ring-0 border-0">
                             {Kelas.map((item,i) => (
                                 <option value={item} key={i} className="capitalize">{item}</option>
                             ))}
@@ -251,8 +251,8 @@ export default function SettingsPage ()  {
                     </div>
 
                     <label className="text-lg" htmlFor="kelamin">Kelamin</label>
-                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
-                        <select name="kelamin" id="kelamin" defaultValue={userData?.kelamin || ''} required className="w-full">
+                    <div className="p-3 bg-gray-100 rounded-4xl">
+                        <select name="kelamin" id="kelamin" defaultValue={userData?.kelamin || ''} required className="w-full focus:outline-0 focus:ring-0 border-0">
                             {kelamin.map((item,i) => (
                                 <option value={item} key={i} className="capitalize">{item}</option>
                             ))}
@@ -260,8 +260,8 @@ export default function SettingsPage ()  {
                     </div>
                     
                     <label className="text-lg" htmlFor="jurusan">Jurusan</label>
-                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
-                        <select name="jurusan" id="jurusan" onChange={(e) => setJurusan(isJurusan(e.target.value) ? e.target.value : '')} defaultValue={jurusan} required className="w-full">
+                    <div className="p-3 bg-gray-100 rounded-4xl">
+                        <select name="jurusan" id="jurusan" onChange={(e) => setJurusan(isJurusan(e.target.value) ? e.target.value : '')} defaultValue={jurusan} required className="w-full focus:outline-0 focus:ring-0 border-0">
                             {jurusanText.map((item,i) => (
                                 <option value={item} key={i} className="capitalize">{item}</option>
                             ))}
@@ -270,8 +270,8 @@ export default function SettingsPage ()  {
                     
 
                     <label className="text-lg" htmlFor="Keahlihan">Keahlihan</label>
-                    <div className="py-1 px-2 bg-gray-100 rounded-2xl">
-                        <select name="keahlian" id="keahlian" defaultValue={userData?.keahlian || ''} required className="w-full">
+                    <div className="p-3 bg-gray-100 rounded-4xl">
+                        <select name="keahlian" id="keahlian" defaultValue={userData?.keahlian || ''} required className="w-full focus:outline-0 focus:ring-0 border-0">
                             {keahlian.map((item,i) => (
                                 <option value={item} key={i} className="capitalize">{item}</option>
                             ))}
@@ -330,7 +330,7 @@ export default function SettingsPage ()  {
                         <i className="fa-solid fa-plus text-center"></i>
                     </div>
 
-                    <h2 className="text-lg"><i className="fa-solid fa-image"></i> Upload Gambar Pencapaian, Karya, atau Pengalaman </h2>
+                    {/* <h2 className="text-lg"><i className="fa-solid fa-image"></i> Upload Gambar Pencapaian, Karya, atau Pengalaman </h2>
                     <div className="overflow-x-scroll md:w-1/2">
                         <ul className="flex flex-row-reverse grow justify-end gap-2">
                             <li className="shrink-0 w-20 h-20 bg-blue-50 hover:bg-blue-100 transition-all duration-200 flex flex-col items-center justify-center rounded-2xl">
@@ -339,7 +339,7 @@ export default function SettingsPage ()  {
                             <li className="shrink-0 w-20 h-20 bg-blue-50 hover:bg-blue-100 transition-all duration-200 flex flex-col items-center justify-center rounded-2xl">
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                     
                     <div className="flex flex-row-reverse justify-between my-5">
                         <input type="submit" value="Simpan" className="px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white rounded-full" />

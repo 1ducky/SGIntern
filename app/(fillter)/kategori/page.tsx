@@ -1,13 +1,13 @@
-import { HScrollCard } from "@/component/card/HScrollCard"
-import { HScrollCardSkeleton } from "@/component/Skeleton/HScrollCardSkeleton"
-import { cacheLife } from "next/cache"
+import { ListCardComponents2 } from "@/component/card/CardList2"
+import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton"
+
 import Link from "next/link"
 import { Suspense } from "react"
 
 
 export default function DetailPage () {
     return (
-        <div className="basis-full p-5">
+        <div className="basis-full py-5">
             <div className="flex justify-center p-6">
 
                 <div className="max-w-5xl w-full flex flex-col items-center gap-10">
@@ -48,54 +48,54 @@ export default function DetailPage () {
 
                 
             </div>
-            <h2 className="text-2xl">Daftar Magang</h2>
-            <Suspense fallback={<HScrollCardSkeleton Total={6}/>}>
+            <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10 ">
+              <h2 className="text-2xl">Daftar Magang</h2>
+              <Suspense fallback={<ListCardSkeleton Total={10}/>}>
                 <MagangDisplay/>
-            </Suspense>
-            <h2 className="text-2xl">Daftar perusahaan</h2>
-            <Suspense fallback={<HScrollCardSkeleton Total={6}/>}>
+              </Suspense>
+            </div>
+            <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
+              <h2 className="text-2xl">Daftar Perusahaan</h2>
+              <Suspense fallback={<ListCardSkeleton Total={10}/>}>
                 <PerusahaanDisplay/>
-            </Suspense>
-
+              </Suspense>
+            </div>
         </div>
     )
 }
 
 async function MagangDisplay() {
-  'use cache'
-  cacheLife('minutes')
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc`, {
       next:{revalidate:60}
   })
 
-  const data = await res.json()
-  console.log(data)
+  const {data} = await res.json()
   
 
   return(
     <>
-      <HScrollCard DataList={data} Path='magang'/>
+      <ListCardComponents2 DataList={data} Path='magang'/>
     </>
   )
 }
 
 async function PerusahaanDisplay() {
-  'use cache'
-  cacheLife('minutes')
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc`, {
       next:{revalidate:60}
   })
 
-  const data = await res.json()
+  const {data} = await res.json()
   
 
   return(
     <>
-      <HScrollCard DataList={data} Path='perusahaan'/>
+      <ListCardComponents2 DataList={data} Path='perusahaan'/>
     </>
   )
 }

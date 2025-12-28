@@ -12,6 +12,11 @@ type Itemtype = {
 }
 
 export const HScrollCard = ({DataList,Path} : {DataList : Itemtype[], Path : string}) => {
+    if(DataList.length === 0 || !DataList) return(
+        <div className="mb-32 grow-0">
+            <h2 className=" w-60 px-5 py-3 bg-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 group cursor-pointer text-lg font-medium rounded-2xl">Tidak Ada Data Terkait</h2>
+        </div>
+    )
     return(
         <div className="Scrollbar-transparent my-5 px-5 overflow-x-scroll flex flex-row flex-nowrap gap-20 transform-gpu will-change-transform rounded-2xl">
             {

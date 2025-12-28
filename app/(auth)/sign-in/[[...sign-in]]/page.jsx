@@ -39,9 +39,8 @@ export default function Page() {
   return (
     <>
       <div className="flex flex-col w-full h-screen justify-center items-center gap-10 ">
-        <h2 className="text-2xl font-bold">SG Intern</h2>
         <form onSubmit={HandlerSubmit} className="flex flex-col gap-3 w-lg bg-blue-200 p-10 py-16 rounded-4xl justify-between">
-          <h2 className="text-2xl font-bold self-center">Masuk ke SGIntern</h2>
+          <h2 className="text-2xl font-semibold self-center">Masuk ke SGIntern</h2>
           {error && <p className="text-red-600 text-sm">{error}</p>}
           <label className="text-lg" htmlFor="email">Email</label>
           <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0" type="email" name="email" id="email" placeholder="Masukan Email" required />
@@ -49,15 +48,17 @@ export default function Page() {
           <label className="text-lg" htmlFor="password">Password</label>
           <input className="text-lg bg-gray-100 p-3 rounded-4xl focus:outline-0 focus:ring-0 border-0" type="password" name="password" id="password" min={8} required placeholder="Masukan Password"/>
 
-          <Link href={'./sign-up'} className="self-start font-bold">
-            Buat Akun Baru
-          </Link>
-          <button className="bg-blue-600 p-5 rounded-full text-white font-bold text-lg">Login</button>
+          <p className="self-start font-semibold ">
+            Belum Mempunyai Akun? Yuk
+            <Link href={'./sign-up'} className="text-blue-900 hover:text-blue-500 transition-all duration-150"> Buat Akun Baru</Link>
+            
+          </p>
+          <button className="bg-blue-600 hover:bg-blue-400 duration-150 transition-all p-5 py-3 rounded-full text-white font-medium text-2xl">Login</button>
+          <h2 className="text-xl text-center font-medium mt-10">Atau Menggunakan</h2>
+          <div className="flex flex-row justify-center gap-10">
+            <SocialButtons/>
+          </div>
         </form>
-        <h2 className="text-2xl font-bold">Atau Menggunakan</h2>
-        <div className="flex flex-row justify-center gap-10">
-          <SocialButtons/>
-        </div>
       </div>
     </>
   )

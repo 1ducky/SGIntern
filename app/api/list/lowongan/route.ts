@@ -9,6 +9,8 @@ import parseSearch from '@/utils/ApiUtils/QueryParse'
 // type
 import { FILTERABLE_FIELDS } from "@/StatisData/StaticType"
 import { FilterField } from "@/StatisData/StaticType"
+import { parsePagination } from '@/utils/ApiUtils/PaginationParse'
+
 
 export default function parseFilters(searchParams: URLSearchParams) : Prisma.LowonganWhereInput | undefined {
     const where: Prisma.LowonganWhereInput = {}
@@ -29,19 +31,24 @@ export default function parseFilters(searchParams: URLSearchParams) : Prisma.Low
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
 
+
     const orderBy = parseOrderBy(searchParams)
     const filter = parseFilters(searchParams)
     const search = parseSearch(searchParams)
+    const pagination = parsePagination(searchParams)
+
     try{
-        const data = await prisma.lowongan.findMany({
+        const [data,total] = await Promise.all([ prisma.lowongan.findMany({
             where: {
             ...filter,
             ...search,
             },
             orderBy,
+            ...pagination,
             select: {
                 name:true,
                 id:true,
+                deskripsi:true,
                 perusahaan:{
                     select:{
                         id:true,
@@ -51,9 +58,9 @@ export async function GET(req: Request) {
                     }
                 }
             }
-        })
+        }), prisma.lowongan.count({where:{ ...filter,...search}})])
 
-        return NextResponse.json(data)
+        return NextResponse.json({data,total})
     }catch(error){
                 // Handler Error
         console.log("GET /api/user error:", error)

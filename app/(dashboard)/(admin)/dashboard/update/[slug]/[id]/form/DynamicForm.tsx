@@ -7,6 +7,7 @@ import { jurusanText,keahlihan } from "@/StatisData/StatisObj"
 import UpdateEntries from "@/app/action/UpdateEntries"
 import { useRouter } from "next/navigation"
 import CustomUploader from "@/component/ImageUploader"
+import DeleteEntries from "@/app/action/DeleteEntries"
 
 type DB ={
         id? : string | null,
@@ -130,10 +131,18 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
     const router = useRouter()
 
     if (!type) return notFound()
-    
-
 
     const fields = FormConfig[type] 
+
+    async function onDelete(id? : string | null, url? : string | null) {
+        if(!id ) return alert('Data Tersebut Tidak Ada')
+        const keyimage = url?.split('|')[1] || null
+        const res = await DeleteEntries(id,type,keyimage)
+        const {status, message} = await res
+
+        if(status == 200) router.replace(`/dashboard/${type}`)
+        else return window.alert(message)
+    }
 
     async function onSubmitDatas(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -162,7 +171,7 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                         case 'image':
                             return (
                                     <li key={i} className="flex flex-col flex-1">
-                                        <CustomUploader setCondition={setisBusy} defaultUrl={defaultValue?.imageUrl}/>
+                                        <CustomUploader setCondition={setisBusy} condition={isBusy} defaultUrl={defaultValue?.imageUrl}/>
                                     </li>
                                 
                                     )
@@ -221,7 +230,7 @@ export default function DynamicUpdateForm ({type,defaultValue,id} : DynamicFormP
                 
             
             <div className="w-full justify-end flex flex-col-reverse md:flex-row self-end text-white text-xl gap-5">
-                <button type='button' className="bg-red-600 hover:bg-red-300 rounded-full px-3 py-2">Hapus</button>
+                <button type='button' onClick={() => onDelete(defaultValue ? defaultValue.id : null,defaultValue ? defaultValue.imageUrl : null)} className="bg-red-600 hover:bg-red-300 rounded-full px-3 py-2">Hapus</button>
                 <input type="submit"value={isBusy ? 'Uploading' : `Simpan`}  className={`px-3 py-2 ${isBusy ? 'bg-blue-600' : 'bg-blue-400'} hover:bg-blue-200 text-white rounded-full`}  disabled={isBusy}/>
             </div>
         </form>

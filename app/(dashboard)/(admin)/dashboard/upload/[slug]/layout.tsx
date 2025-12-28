@@ -7,7 +7,7 @@ interface LayoutProps {
   }
 }
 
-export const dynamicParams = false
+
 
 export async function generateStaticParams() {
     const StaticParams =['magang','lowongan','perusahaan']

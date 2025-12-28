@@ -14,7 +14,7 @@ export const SideBar = ({Condition} : SideBarProp) => {
                 <ul className=" flex flex-col gap-2 px-5 pl-1">
                     <li><Link  className="text-xl pr-10" href={'/'} prefetch={false}><i className="fa-solid fa-house"></i> Beranda</Link></li>
                     <li><Link  className="text-xl pr-10" href={'/kategori'} prefetch={false}><i className="fa-solid fa-filter"></i> Kategori</Link></li>
-                    <li><Link  className="text-xl pr-10" href={'/Pencarian'} prefetch={false}><i className="fa-solid fa-magnifying-glass"></i> Pencarian</Link></li>
+                    <li><Link  className="text-xl pr-10" href={'/kategori/perusahaan'} prefetch={false}><i className="fa-solid fa-magnifying-glass"></i> PartnertShip</Link></li>
                 </ul>
                 <div className="flex flex-col flex-nowrap">
 

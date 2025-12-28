@@ -5,14 +5,15 @@ import { deleteImage } from "@/app/action/DeleteImage"
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
-export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : string | null,setCondition : React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function CustomUploader({defaultUrl,setCondition,condition}:{defaultUrl? : string | null,condition? : boolean,setCondition : React.Dispatch<React.SetStateAction<boolean>>}) {
     // defaultUrl exemple = "https://cdn.com/name|key"
     console.log(defaultUrl)
     const [file, setFile] = useState<File | null>(null)
     const [imageUrl,setimageUrl] = useState<string | null>(defaultUrl ? defaultUrl : null)
     const [isUpload,setisUpload] = useState<boolean>(!imageUrl ? true : false) //'true : upload, false : update'
-    const [isProcess, setisProcess] = useState<boolean>(false)
+    const [isProcess, setisProcess] = useState<boolean>(condition ? condition : false)
     console.log(imageUrl?.split('|')[0])
+
 
     useEffect(() => {
 
@@ -29,6 +30,7 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
         onClientUploadComplete: (res) => {
             const imageclient = `${res[0].ufsUrl}|${res[0].key}`
             setimageUrl(imageclient)
+            setisProcess(false)
             console.log(imageclient)
             console.log(imageUrl);
         },
@@ -51,10 +53,8 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
             if(isUpload) {
 
                 await startUpload([preview]) 
-                console.log('do Upload')
                 setisUpload(false)
             }else{
-                console.log('deleting image')
                 const key = imageUrl ? imageUrl.split('|')[1] : null
                 await deleteImage(key)
                 await startUpload([preview])
@@ -86,11 +86,11 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
                     accept="image/*"
                     onChange={onChangeImage}
                     ref={fileRef}
-                    disabled={isUploading}
+                    disabled={isUploading || isProcess}
                     className="hidden"
                 />
+                {previewUrl && <Image src={previewUrl} alt="preview" sizes="100px" quality={80} fill className="absolute"/>}
                 
-                <Image src={previewUrl} alt="preview" sizes="100px" quality={80} fill className="absolute"/>
                 
                 <button className="absolute bottom-1/2 right-1/2 translate-1/2 text-blue-300 hover:text-blue-100 font-medium p-10 text-md flex flex-col items-center" type="button" onClick={() => fileRef.current?.click()} disabled={isUploading}>
                     <i className="fa-regular fa-camera text-center"></i>
@@ -98,7 +98,7 @@ export default function CustomUploader({defaultUrl,setCondition}:{defaultUrl? : 
                 </button>
             </div>
             {/* fallback value */}
-            <input type="text" name="imageUrl" id="imageUrl" defaultValue={imageUrl || ''} className=""/>
+            <input type="text" name="imageUrl" id="imageUrl" value={imageUrl || ''} readOnly className="hidden"/>
         
         </>
     );

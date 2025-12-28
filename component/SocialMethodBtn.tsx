@@ -19,14 +19,14 @@ export default function SocialButtons() {
     <>
       <button
         onClick={() => oauthLogin("oauth_google")}
-        className="w-16 h-16 bg-blue-500 text-white rounded-full"
+        className="w-16 h-16 bg-blue-500 hover:bg-blue-300 duration-150 transition-all text-white rounded-full"
       >
         <i className="fa-brands fa-google"></i>
       </button>
 
       <button
         onClick={() => oauthLogin("oauth_github")}
-        className="w-16 h-16 bg-blue-400 text-white rounded-full"
+        className="w-16 h-16 bg-blue-400 hover:bg-blue-300 duration-150 transition-all text-white rounded-full"
       >
         <i className="fa-brands fa-github"></i>
       </button>

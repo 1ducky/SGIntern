@@ -40,7 +40,7 @@ export default async function DashboardLayout({children} : {children : React.Rea
     }
 
     return(
-        <div className=" flex flex-col px-10 my-5 py-5 overflow-x-hidden">  
+        <div className=" flex flex-col px-10 my-5 lg:px-40 md:20 xl:px-52 py-10  overflow-x-hidden">  
             <ul className="w-full self-start flex flex-row items-start gap-3 sm:gap-7 overflow-x-auto rounded-t-2xl">
                 <Link prefetch={false} href={'/dashboard'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Dashboard</Link>
                 <Link prefetch={false} href={'/dashboard/magang'} className="px-5 py-3 bg-blue-50 hover:bg-blue-100 transition-all rounded-t-2xl ">Magang</Link>
