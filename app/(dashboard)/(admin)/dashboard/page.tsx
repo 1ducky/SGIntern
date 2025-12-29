@@ -5,7 +5,7 @@ import { useContextUtils } from "@/utils/ContextProvider"
 export default function Dashboard () {
     const Context = useContextUtils()
     return (
-        <div className="w-full bg-white md:rounded-tr-2xl p-5 rounded-b-2xl flex flex-col flex-wrap">
+        <div className="w-full min-h-[360px] bg-white md:rounded-tr-2xl p-5 rounded-b-2xl flex flex-col flex-wrap">
             <h2 className="text-4xl font-medium">Dashboard</h2>
             <div className="flex flex-row flex-wrap gap-5">
                 <div className="lc flex-1 flex flex-col gap-3">

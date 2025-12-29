@@ -4,6 +4,7 @@ import "./globals.css";
 import { MenuUi } from "@/component/MenuUI";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import Footer from "@/component/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,7 @@ export default function RootLayout({
           <MenuUi></MenuUi>
           <div className="mt-20"></div>
           {children}
+          <Footer/>
         </body>
       </html>
     </ClerkProvider>

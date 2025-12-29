@@ -47,12 +47,14 @@ export const ListCardComponents = ({DataList,Path} : {DataList : Itemtype[],Path
                                             fill
                                             sizes="96px"
                                             priority={false}
-                                            decoding='async'/>
+                                            decoding='async'
+                                            loading="lazy"
+                                            />
                                         
                                     </div>
                                     <div className="flex flex-col mt-5">
                                         {/* Static */}
-                                        <h3 className="text-nowrap capitalize">{Path} {List.name}</h3>
+                                        <h3 className="text-nowrap capitalize font-bold">{Path} {List.name}</h3>
                                         
                                         <h3><i className="fa-solid fa-location-dot mt-1 text-gray-400"></i> {isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat : List.alamat}</h3>
                                         <h2>{truncate(List.deskripsi ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.deskripsi ?? 'Tidak ada Deskripsi' : 'Tidak Ada Deskripsi'),60)}</h2>

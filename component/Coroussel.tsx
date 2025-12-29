@@ -26,7 +26,7 @@ export const CorousselComponent = ({Information}: {Information: InfoItem[]}) => 
 
     return (
     <>
-        <div className="w-full h-96 md:h-[420px] overflow-hidden relative transform-gpu will-change-transform">
+        <div className="w-full h-96 md:h-[480px] overflow-hidden relative transform-gpu will-change-transform">
             <div className="absolute bg-blue-300 p-1 px-2 rounded-full z-21 m-5 ">Informasi Terbaru</div>
                 <ul className="img flex flex-nowrap h-full transition-transform duration-500 relative transform-gpu" style={
                     {
@@ -39,7 +39,7 @@ export const CorousselComponent = ({Information}: {Information: InfoItem[]}) => 
                     {
 
                         return (
-                        <Link href={'/'} key={index} className="w-screen h-full bg-blue-500 flex items-center justify-center relative z-20 object-cover">
+                        <Link href={'/'} key={index} className="w-screen h-full bg-blue-500 flex items-center justify-center relative z-20 object-contain">
                             <Image src={item.image || '/vercel.svg'} 
                             alt={item.title} 
                             className=" object-cover object-[center_10%] "

@@ -86,25 +86,29 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                             
                             {isPerusahaanObject(data.perusahaan) ? 
                                 (<>
-                                    <p className="text-2xl font-semibold text-gray-700 mb-2 capitalize">
+                                    <Link href={`/detail/perusahaan/${data.perusahaan.id}/${encodeURIComponent(data.perusahaan.name.replace(/ /g,'-'))}`} className="text-xl font-semibold text-blue-400 mb-2 capitalize">
                                         Dari {data.perusahaan.name}
-                                    </p>  
-                                    <Link href={`/detail/perusahaan/${data.perusahaan.id}/${encodeURIComponent(data.perusahaan.name.replace(/ /g,'-'))}`} className="text-xl font-semibold text-gray-700 mb-2 capitalize">
-                                        {data.perusahaan.alamat}
-                                    </Link>
-                                    <h2 className="font-semibold text-xl">Dibutuhkan</h2>
-                                    <p className="text-lg font-semibold text-gray-700  capitalize">
-                                        {data.keahlian}
-                                    </p>  
-                                    <p className="text-lg font-semibold text-gray-700  capitalize">
-                                       Jurusan {data.jurusan}
-                                    </p>    
+                                    </Link>  
+                                    <p  className="text-md font-semibold text-gray-700 mb-2 italic">
+                                        <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>{data.perusahaan.alamat}
+                                    </p>
+                                    <h2 className="font-semibold text-xl text-orange-400 underline shrink-0 mt-3">Kualifikasi</h2>
+
+                                    <ol className="list-disc list-inside" type="1">
+                                        <li className="text-lg font-semibold text-gray-700  capitalize">
+                                            Menguasai {data.keahlian}
+                                        </li>  
+                                        <li className="text-lg font-semibold text-gray-700  capitalize">
+                                        Diutamakan Jurusan {data.jurusan}
+                                        </li>    
+                                    </ol>
+                                    
                                 </>)
                                 :
                                 // render Jika Sebuah Perusahaan
                                 (<>
-                                    <p className="text-xl font-semibold text-gray-700 mb-2 capitalize">
-                                        {data.alamat}
+                                    <p className="text-xl font-semibold text-gray-700 mb-2 capitalize italic">
+                                        <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>{data.alamat}
                                     </p>  
                                     
                                 </>)
@@ -113,20 +117,17 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                             {isPerusahaanObject(data.perusahaan)?
                                 (
                                     <>
-                                        <h2 className="font-semibold text-2xl mt-1">Deskripsi</h2>
+                                        <h2 className="font-semibold text-xl underline mt-3 capitalize">Deskripsi {slug}</h2>
                                         <p className="text-gray-600 leading-relaxed mb-8">
                                             {data.deskripsi}
                                         </p>
-                                        <h2 className="font-semibold text-2xl mt-1">Deskripsi Perusahaan</h2>
-                                        <p className="text-gray-600 leading-relaxed mb-8">
-                                            {data.perusahaan.deskripsi}
-                                        </p>
+                                        
                                     </>
                                 )
                                 :
                                 (
                                     <>
-                                        <h2 className="font-semibold text-2xl mt-1">Deskripsi Perusahaan</h2>
+                                        <h2 className="font-semibold text-xl underline mt-3">Deskripsi Perusahaan</h2>
                                         <p className="text-gray-600 leading-relaxed mb-8">
                                             {data.deskripsi}
                                         </p>
@@ -145,7 +146,7 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                 </div>
             </div>
             <div className="lg:px-40 md:20 xl:px-52 px-10 my-5 py-5">
-                <h2 className="capitalize text-xl font-semibold ">Referensi Terkait {slug}</h2>
+                <h2 className="capitalize text-xl font-semibold ">Jelajahi {slug} Terkait</h2>
                 <Suspense fallback={<ListCardSkeleton Total={6}/>}>
                     <FeedList endpoint={slug} jurusan={isPerusahaanObject(data.perusahaan) ? data.jurusan : null}/>
                 </Suspense>

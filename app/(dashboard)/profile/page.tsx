@@ -228,10 +228,13 @@ export default function SettingsPage ()  {
                     <input type="file" accept="image/*" ref={fileRef} onChange={onChangeImage}/>
                 </div>
                 <div className="flex flex-col justify-start gap-3">
-                    <h2 className="sm:text-nowrap text-wrap text-start text-3xl lg:text-5xl">Selamat Datang <br /> {userData?.name || AuthUser?.username || AuthUser?.fullname || 'Loading'}</h2>
+                    <div className="font-medium">
+                        <h2 className="sm:text-nowrap text-wrap text-start text-3xl lg:text-5xl">Selamat Datang </h2>
+                        <h2 className="sm:text-nowrap text-wrap text-start text-3xl lg:text-5xl text-blue-400 underline underline-offset-1">{userData?.name || AuthUser?.username || AuthUser?.fullname || 'Loading'}</h2>
+                    </div>
+                    
                     <h3 className="text-2xl text-start">{AuthUser?.email}</h3>
                     <h3 className="text-2xl text-start">{userData?.role?.toLowerCase() == 'admin' ? <Link prefetch={false} className="capitalize text-blue-500 hover:text-blue-300" href={'/dashboard'}>{userData?.role} Dashboard</Link> : 'Pelajar'}</h3>
-
                 </div>
             </div>
 

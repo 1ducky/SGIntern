@@ -51,7 +51,7 @@ export const MenuUi = () => {
                     <ul className=" flex-row gap-2 hidden xl:flex">
                         <li><Link  className="text-xl pr-10" href={'/'} prefetch={false}><i className="fa-solid fa-house"></i> Beranda</Link></li>
                         <li><Link  className="text-xl pr-10" href={'/kategori'} prefetch={false}><i className="fa-solid fa-filter"></i> Kategori</Link></li>
-                        <li><Link  className="text-xl pr-10" href={'/kategori/perusahaan'} prefetch={false}><i className="fa-solid fa-handshake"></i> PartnerShip</Link></li>
+                        <li><Link  className="text-xl pr-10" href={'/kategori/perusahaan'} prefetch={false}><i className="fa-solid fa-handshake"></i> Mitra</Link></li>
                     </ul>
                     
                     {/* Condition Render */}

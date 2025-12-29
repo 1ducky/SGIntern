@@ -14,7 +14,7 @@ export const SideBar = ({Condition} : SideBarProp) => {
                 <ul className="w-full flex flex-row justify-between gap-2">
                     <li><Link  className="text-lg " href={'/'} prefetch={false}><i className="fa-solid fa-house"></i> Beranda</Link></li>
                     <li><Link  className="text-lg " href={'/kategori'} prefetch={false}><i className="fa-solid fa-filter"></i> Kategori</Link></li>
-                    <li><Link  className="text-lg " href={'/kategori/perusahaan'} prefetch={false}><i className="fa-solid fa-magnifying-glass"></i> PartnertShip</Link></li>
+                    <li><Link  className="text-lg " href={'/kategori/perusahaan'} prefetch={false}><i className="fa-solid fa-magnifying-glass"></i>Mitra</Link></li>
                 </ul>
 
             

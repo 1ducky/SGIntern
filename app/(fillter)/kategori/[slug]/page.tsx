@@ -62,7 +62,7 @@ export default async function KategoriPage ( {params,searchParams} : Props ) {
 
   return (
       <>
-        <div className="bg-white md:px-20 px-10 mt-10 py-10">
+        <div className="bg-white md:px-20 px-10 mt-10 py-2">
           <h2 className="text-2xl capitalize font-medium">Daftar {slug}</h2>
           
           <FilterComponent query={query} jurusan={jurusan} TypeQuery={clean}/>
@@ -95,7 +95,7 @@ async function QueryDisplay({limit,offset,query,endpoint,jurusan,page}:{limit:nu
   return(
     <>
       <h2 className="capitalize my-5">Ditemukan {total} {endpoint} </h2>
-      <ListCardComponents2 DataList={data} Path='perusahaan'/>
+      <ListCardComponents2 DataList={data} Path={endpoint}/>
       <Pagination Page={page} Total={TotalPage}/>
     </>
   )

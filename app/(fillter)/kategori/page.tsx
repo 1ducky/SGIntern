@@ -19,7 +19,7 @@ export default function DetailPage () {
                                 <i className="fa-solid fa-graduation-cap"></i>
                             </div>
                             <h3 className="text-2xl font-bold text-gray-800 mb-2">Magang</h3>
-                            <p className="text-gray-500 text-sm mb-4">Temukan pengalaman kerja pertama untuk siswa & mahasiswa.</p>
+                            <p className="text-gray-500 text-sm mb-4 capitalize">Temukan pengalaman kerja pertama untuk siswa <span className="uppercase">SMK</span></p>
                             <span className="text-xs font-semibold bg-sky-100 text-sky-700 py-1 px-3 rounded-full">150+ Posisi</span>
                         </Link>
 
@@ -28,7 +28,7 @@ export default function DetailPage () {
                                 <i className="fa-solid fa-briefcase"></i>
                             </div>
                             <h3 className="text-2xl font-bold text-gray-800 mb-2">Lowongan</h3>
-                            <p className="text-gray-500 text-sm mb-4">Peluang kerja full-time dan part-time untuk profesional.</p>
+                            <p className="text-gray-500 text-sm mb-4 capitalize">Peluang kerja full-time dan part-time untuk profesional.</p>
                             <span className="text-xs font-semibold bg-orange-100 text-orange-700 py-1 px-3 rounded-full">800+ Aktif</span>
                         </Link>
 
@@ -36,8 +36,8 @@ export default function DetailPage () {
                             <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-500 transition-colors">
                                 <i className="fa-solid fa-building"></i>
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">PartnerShips</h3>
-                            <p className="text-gray-500 text-sm mb-4">Jelajahi profil perusahaan impian dan budaya kerjanya.</p>
+                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Mitra</h3>
+                            <p className="text-gray-500 text-sm mb-4 capitalize">Jelajahi Profil Perusahaan yang Bermitra Dengan <span className="uppercase">SMK</span>  Sunan Giri Menganti</p>
                             <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full">45 Mitra</span>
                         </Link>
 
