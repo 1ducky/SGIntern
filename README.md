@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#SGIntern
+Platform Penyedia Informasi Magang, Lowongan, Konsultasi Untuk Peserta Didik Maupun Alumni
 
-## Getting Started
+SGintern Adalah Sebuah Yang Menyediakan Informasi Magang Untuk Anak Didik dan
+Lowongan Untuk Alumni Agar Mendapatkan Informasi Dari Pihak BKK,
 
-First, run the development server:
+## Fitur
+ - Data Yang Ditampilkan Berintegritas
+ - Pencarian Lowongan Pekerjaan maupun Magang Berdasarkan Jurusan
+ - Relasi Data Perusahaan Dengan Lowongan Maupun Magang
+ - Pembuatan CV Otomatis Setelah Mendaftar
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tech Stack
+- Next.js 16 App Router (Framework)
+- React 
+- Tailwind CSS (Style)
+- Prisma (ORM)
+- Vercel Postgres / Storage (Online Database)
+- PostgreSQL (Database)
+- UploadThing (Storage Service)
+- Clerk (Auth System)
+
+## Project Structure
+root/
+ ├─ app/
+ │   ├─ api/
+ │   ├─ (auth)/
+ │   ├─ (dashboard)/
+ │   │   ├─ (Admin DashBoard)
+ │   │   └─ Profile
+ │   ├─ (filter)/
+ │   ├─ action/
+ │   ├─ cv/
+ │   ├─ detail/
+ │   └─ page.tsx
+ ├─ components/
+ │   ├─ CardList/(Display Item)
+ │   ├─ Csr/(Client Interactive)
+ │   └─ Skeleton/(Suspend Fallback)
+ ├─ lib/
+ ├─ Public/
+ ├─ utils/
+ ├─ prisma/
+ └─ staticData/
+
+## Bahan Sebelum Instalasi
+ - Node Js v18.x.x^
+ - Package Manager
+    - npm
+    - pnpm
+    - yarn
+ - Git
+ - Browser Modern
+ - Terminal
+
+ ## Langkah-Langkah Instalasi
+Setelah Bahan Yang Dibutuhkan Terpenuh, Bisa Lanjut Instalasi
+
+ 1. Buat Folder Untuk Instalasi
+
+ 2. Clone Repository dan Lakukan Instalasi Dependency Yang dibutuhkan
+
+ ```bash
+    git clone https://github.com/1ducky/SGIntern.git
+    cd SGintern
+    npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Setelah Selesai Instalasi, Lakukan Generate Prisma Untuk Intilize
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+    npm prisma generate
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Jalankan Demo Project di localhost:3000/
+```bash
+    npm run dev
+```
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Anda Bisa Gunakan Demo Environment Dan Bersifat Development Yang Sudah Tersedia
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Atau Anda Bisa Memasukan Environment Sendiri
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+    DATABASE_URL
+    POSTGRES_URL
+    PRISMA_DATABASE_URL
+```
 
-## Deploy on Vercel
+Anda Bisa Dapatkan Dari [Vercel](https://vercel.com/)
+ - Lakukan Login Akun Vercel
+ - Masuk Ke Dashboard
+ - Pilih Opsi Storage
+ - Buat Databse
+ - Pilih Prisma PostgreSQL
+ - Atur Konfigurasi Sebelum Membuat
+ - Copy Token '.env.local'
+ - masukan Lalu Lakukan Syncron Database Dengan.
+```bash
+    npx prisma db push
+    npx prisma generate
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    CLERK_SECRET_KEY
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Anda Bisa Dapatkan dari [Clerk](https://clerk.com/)
+ - Lakukan Login Akun Clerk
+ - Masuk Dashboard
+ - Buat Aplikasi dan Aktifkan Metode Google, Github, dan Email
+ - Masuk Ke Aplikasi Lalu Masuk Ke Konfigurasi
+ - Masuk Ke User & authentication
+ - Menu Email, Matikan Semua Opsi Kecuali Sign-up with Email dan Sign-in with Email
+ - Menu Username, Nyalakan semua Opsi Kecuali Require Username
+ - Menu Password, Matikan Client Trust
+ - Menu User Model, Nyalakan Opsi First and Last Name dan Allow Users to Delete Their Accounts
+ - Setelah Konfigurasi Masuk Ke API Key lalu Pilih Framework Next.js dan Copy '.env.local'.
+
+```bash
+    UPLOADTHING_TOKEN
+```
+
+Anda Bisa Dapatkan dari [UploadThing](https://uploadthing.com/)
+ - Lakukan Login Akun Dengan Github
+ - Masuk Dashboard
+ - Buat Aplikasi Lalu Masuk Ke Statistic Aplikasi
+ - Masuk Ke Menu API Key
+ - Pilih SDK v7+ Lalu Copy '.env.local'
+
+## Usage
+1. User Login Clerk(Belum Terdaftar Di Database)
+2. User Membuat CV di Menu Profile Pojok Kanan Atas(Terdaftar Ke Database)
+3. User Bisa Melihat CV yang Tergenerate
+4. User Bisa Mencari Lowongan, Magang, Dan Perusahaan Terkait
+5. User Bisa Melihat Data Lengkap
+
+## Techniction
+Pada env Demo Sudah Tersedia Akun Admin dengan Login
+```bash
+    admin@mail.com
+    Q1Q11234
+```
+
+Jika Menggunakan env Sendiri Anda Bisa Masuk
+```bash
+    npx prisma studio
+```
+ - Cari Table Users
+ - Cari Akun Yang akan Jadi Admin
+ - Ganti Role pelajar -> Admin
+
+ Admin DashBoard Bisa Diakses Melalui Profile Yang Menggantika Pelajar Menjadi Link Admin Dashboard
+
+ 

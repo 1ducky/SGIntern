@@ -46,7 +46,9 @@ export const ListCardComponents2 = ({DataList,Path} : {DataList : Itemtype[],Pat
                                             fill
                                             sizes="96px"
                                             priority={false}
-                                            decoding='async'/>
+                                            decoding='async'
+                                            loading="lazy"
+                                            />
                                         
                                     </div>
                                     <h3 className="text-lg text-gray-700 mb-4 leading-tight capitalize">{Path} {List.name}</h3>

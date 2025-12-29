@@ -2,6 +2,7 @@ import { ListCardComponents2 } from "@/component/card/CardList2"
 import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton"
 import { isPerusahaanObject } from "@/utils/isPerusahaanObj"
 import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
@@ -88,9 +89,9 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                                     <p className="text-2xl font-semibold text-gray-700 mb-2 capitalize">
                                         Dari {data.perusahaan.name}
                                     </p>  
-                                    <p className="text-xl font-semibold text-gray-700 mb-2 capitalize">
+                                    <Link href={`/detail/perusahaan/${data.perusahaan.id}/${encodeURIComponent(data.perusahaan.name.replace(/ /g,'-'))}`} className="text-xl font-semibold text-gray-700 mb-2 capitalize">
                                         {data.perusahaan.alamat}
-                                    </p>
+                                    </Link>
                                     <h2 className="font-semibold text-xl">Dibutuhkan</h2>
                                     <p className="text-lg font-semibold text-gray-700  capitalize">
                                         {data.keahlian}
