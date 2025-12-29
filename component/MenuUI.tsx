@@ -40,7 +40,7 @@ export const MenuUi = () => {
                 <div className="flex flex-row gap-5 flex-nowrap items-center">
                     <button onClick={() => StateHandler('SideBar')} className="w-10 h-10 bg-blue-700 rounded-full text-center block xl:hidden"><i className="fa-solid fa-bars"></i></button>
                     <Link href={'/'} className="w-36 h-full relative">
-                        <Image src={'/logo.webp'} alt="logo" fill className="absolute top-0 left-0" decoding="async" preload={true} quality={75}/>
+                        <Image src={'/logo.webp'} alt="logo" fill className="absolute top-0 left-0" decoding="async" preload={true} sizes="200px" quality={75}/>
                     </Link>
                 </div>
 
@@ -62,6 +62,8 @@ export const MenuUi = () => {
                                     src={user.imageUrl} 
                                     alt="Profile"
                                     fill
+                                    loading="lazy"
+                                    sizes="20px"
                                 />
 
                             </button>

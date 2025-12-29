@@ -6,8 +6,8 @@ import { ListCardComponents } from "@/component/card/ListCard"
 import { Suspense } from "react"
 
 import Link from "next/link"
-import { getRandomItem } from "@/utils/getRandomIndex"
-import { jurusanText } from "@/StatisData/StatisObj"
+// import { getRandomItem } from "@/utils/getRandomIndex"
+// import { jurusanText } from "@/StatisData/StatisObj"
 import { ListCardComponents2 } from "@/component/card/CardList2"
 
 
@@ -18,17 +18,17 @@ export default async function Home() {
     {
       title: 'information',
       description: 'description',
-      image:'url'
+      image:'/banner/b1.webp'
     },
     {
       title: 'information',
       description: 'description',
-      image:'url'
+      image:'/banner/b2.webp'
     },
     {
       title: 'information',
       description: 'description',
-      image:'url'
+      image:'/banner/b3.webp'
     },
   ]
 
@@ -55,12 +55,12 @@ export default async function Home() {
           <LowonganDisplay/>
         </Suspense>
       </div>
-      <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
+      {/* <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
         <h2 className="text-2xl">Daftar Magang Jurusan Acak</h2>
         <Suspense fallback={<ListCardSkeleton Total={10}/>}>
           <RandomMagangDisplay/>
         </Suspense>
-      </div>
+      </div> */}
       
       <div className="w-full"></div>
 
@@ -218,22 +218,22 @@ async function LowonganDisplay() {
     </>
   )
 }
-async function RandomMagangDisplay() {
+// async function RandomMagangDisplay() {
 
     
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    // const Random = getRandomItem(jurusanText)
+//     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+//     // const Random = getRandomItem(jurusanText)
 
-    const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&order[jurusan]=TMI`, {
-        next:{revalidate:60}
-    })
+//     const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&order[jurusan]=TMI`, {
+//         next:{revalidate:60}
+//     })
 
-    const {data} = await res.json()
+//     const {data} = await res.json()
     
 
-    return(
-      <>
-        <ListCardComponents2 DataList={data} Path='magang'/>
-      </>
-    )
-}
+//     return(
+//       <>
+//         <ListCardComponents2 DataList={data} Path='magang'/>
+//       </>
+//     )
+// }

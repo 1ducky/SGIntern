@@ -26,9 +26,9 @@ export const CorousselComponent = ({Information}: {Information: InfoItem[]}) => 
 
     return (
     <>
-        <div className="w-full h-96 overflow-hidden relative transform-gpu will-change-transform">
+        <div className="w-full h-96 md:h-[420px] overflow-hidden relative transform-gpu will-change-transform">
             <div className="absolute bg-blue-300 p-1 px-2 rounded-full z-21 m-5 ">Informasi Terbaru</div>
-                <ul className="img flex flex-nowrap h-96 transition-transform duration-500 relative transform-gpu" style={
+                <ul className="img flex flex-nowrap h-full transition-transform duration-500 relative transform-gpu" style={
                     {
                         width:`${TotalSlide*100}vw`,
                         transform: `translateX(-${CurrentSlide * 100}vw)`,
@@ -39,15 +39,19 @@ export const CorousselComponent = ({Information}: {Information: InfoItem[]}) => 
                     {
 
                         return (
-                        <Link href={'/information'} key={index} className="w-screen h-full bg-blue-500 flex items-center justify-center relative z-20">
-                            <Image src={'/public/vercel.svg'} 
+                        <Link href={'/'} key={index} className="w-screen h-full bg-blue-500 flex items-center justify-center relative z-20 object-cover">
+                            <Image src={item.image || '/vercel.svg'} 
                             alt={item.title} 
                             className=" object-cover object-[center_10%] "
                             fill
-                            decoding='async'/>
-                            <div className="absolute bottom-0 w-full h-[20vh] bg-black/60 text-white flex items-center justify-center flex-col cursor-pointer" >
-                                <h2 className="text-xl md:text-3xl p-4 bg-slate-800/60 rounded-full " >{item.title}</h2>
-                                <p className="px-5 mt-2">{item.description}</p>
+                            decoding='async'
+                            sizes="420px"
+                            
+                            loading="lazy"
+                            />
+                            <div className="absolute bottom-0 w-full h-28 bg-black/60 text-white flex items-center justify-start gap-2 flex-col cursor-pointer" >
+                                <h2 className="text-xl md:text-3xl p-4 pb-0" >{item.title}</h2>
+                                <p className="px-5">{item.description}</p>
                             </div>
                         </Link>
                     )})}
