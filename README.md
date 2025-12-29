@@ -21,6 +21,7 @@ Lowongan Untuk Alumni Agar Mendapatkan Informasi Dari Pihak BKK,
 - Clerk (Auth System)
 
 ## Project Structure
+```text
 root/
  ├─ app/
  │   ├─ api/
@@ -42,7 +43,7 @@ root/
  ├─ utils/
  ├─ prisma/
  └─ staticData/
-
+```
 ## Bahan Sebelum Instalasi
  - Node Js v18.x.x^
  - Package Manager
@@ -155,4 +156,3 @@ Jika Menggunakan env Sendiri Anda Bisa Masuk
 
  Admin DashBoard Bisa Diakses Melalui Profile Yang Menggantika Pelajar Menjadi Link Admin Dashboard
 
- 
