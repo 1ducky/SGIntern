@@ -55,13 +55,13 @@ export const ListCardComponents2 = ({DataList,Path} : {DataList : Itemtype[],Pat
                                     <div className="mt-auto space-y-3">
                                         {/* Static */}
                                         <div className="flex gap-3 text-sm text-gray-500 leading-relaxed">
-                                            <span>{isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat : List.alamat}</span>
                                             <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>
+                                            <span>{isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat : List.alamat}</span>
                                         </div>
                                         <div className="flex flex-col gap-3 text-xs text-gray-500 items-start">
 
                                             <span>{truncate(List.deskripsi ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.deskripsi ?? 'Tidak ada Deskripsi' : 'Tidak Ada Deskripsi'),60)}</span>
-                                            <button className="text-white hover:text-blue-600 font-medium px-3 py-2 rounded-xl bg-blue-600 hover:bg-transparent hover:border-blue-600 border-2 border-transparent">Detail</button>
+                                            <button className="duration-150 text-white hover:text-blue-600 font-medium px-3 py-2 rounded-xl bg-blue-600 hover:bg-transparent hover:border-blue-600 border-2 border-transparent">Detail</button>
                                         </div>
 
                                     </div>

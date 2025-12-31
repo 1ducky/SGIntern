@@ -7,7 +7,7 @@ import { Suspense } from "react"
 
 export default function DetailPage () {
     return (
-        <div className="basis-full py-5">
+        <div className="basis-full py-5 pb-0">
             <div className="flex justify-center p-6">
 
                 <div className="max-w-5xl w-full flex flex-col items-center gap-10">
@@ -48,16 +48,16 @@ export default function DetailPage () {
 
                 
             </div>
-            <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10 ">
-              <h2 className="text-2xl">Daftar Magang</h2>
-              <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-                <MagangDisplay/>
-              </Suspense>
-            </div>
             <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
               <h2 className="text-2xl">Daftar Perusahaan</h2>
               <Suspense fallback={<ListCardSkeleton Total={10}/>}>
                 <PerusahaanDisplay/>
+              </Suspense>
+            </div>
+            <div className=" md:px-20 sm:px-10 px-5 mt-10 ">
+              <h2 className="text-2xl">Daftar Magang</h2>
+              <Suspense fallback={<ListCardSkeleton Total={10}/>}>
+                <MagangDisplay/>
               </Suspense>
             </div>
         </div>

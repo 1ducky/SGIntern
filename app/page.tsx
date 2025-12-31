@@ -43,7 +43,7 @@ export default async function Home() {
   priority={true}
   decoding="async"
 />
-      <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10">
+      <div className=" md:px-20 sm:px-10 px-5 mt-10">
         <h2 className="text-2xl">Daftar Magang</h2>
         <Suspense fallback={<ListCardSkeleton Total={6}/>}>
           <MagangDisplay/>
@@ -56,7 +56,7 @@ export default async function Home() {
           <PerusahaanDisplay/>
         </Suspense>
       </div>
-      <div className="bg-blue-100 md:px-20 sm:px-10 px-5 mt-10">
+      <div className=" md:px-20 sm:px-10 px-5 mt-10">
         <h2 className="text-2xl">Daftar Lowongan Pekerjaan</h2>
         <Suspense fallback={<ListCardSkeleton Total={10}/>}>
           <LowonganDisplay/>

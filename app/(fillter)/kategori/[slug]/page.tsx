@@ -94,7 +94,7 @@ async function QueryDisplay({limit,offset,query,endpoint,jurusan,page}:{limit:nu
 
   return(
     <>
-      <h2 className="capitalize my-5">Ditemukan {total} {endpoint} </h2>
+      <h2 className="capitalize my-5 text-lg font-semibold">Ditemukan {total} {endpoint} </h2>
       <ListCardComponents2 DataList={data} Path={endpoint}/>
       <Pagination Page={page} Total={TotalPage}/>
     </>

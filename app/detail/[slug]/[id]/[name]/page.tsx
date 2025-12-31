@@ -86,15 +86,15 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                             
                             {isPerusahaanObject(data.perusahaan) ? 
                                 (<>
-                                    <Link href={`/detail/perusahaan/${data.perusahaan.id}/${encodeURIComponent(data.perusahaan.name.replace(/ /g,'-'))}`} className="text-xl font-semibold text-blue-400 mb-2 capitalize">
-                                        Dari {data.perusahaan.name}
+                                    <Link href={`/detail/perusahaan/${data.perusahaan.id}/${encodeURIComponent(data.perusahaan.name.replace(/ /g,'-'))}`} className="text-xl font-semibold mb-2 capitalize">
+                                        Dari <span className="text-blue-400 hover:text-blue-300 duration-150">{data.perusahaan.name}</span>
                                     </Link>  
                                     <p  className="text-md font-semibold text-gray-700 mb-2 italic">
                                         <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>{data.perusahaan.alamat}
                                     </p>
                                     <h2 className="font-semibold text-xl text-orange-400 underline shrink-0 mt-3">Kualifikasi</h2>
 
-                                    <ol className="list-disc list-inside" type="1">
+                                    <ol className="list-disc list-inside mt-4" type="1">
                                         <li className="text-lg font-semibold text-gray-700  capitalize">
                                             Menguasai {data.keahlian}
                                         </li>  
@@ -118,7 +118,7 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                                 (
                                     <>
                                         <h2 className="font-semibold text-xl underline mt-3 capitalize">Deskripsi {slug}</h2>
-                                        <p className="text-gray-600 leading-relaxed mb-8">
+                                        <p className="text-gray-600 text-lg leading-relaxed mb-8">
                                             {data.deskripsi}
                                         </p>
                                         
@@ -128,7 +128,7 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                                 (
                                     <>
                                         <h2 className="font-semibold text-xl underline mt-3">Deskripsi Perusahaan</h2>
-                                        <p className="text-gray-600 leading-relaxed mb-8">
+                                        <p className="text-gray-600 text-lg leading-relaxed mb-8">
                                             {data.deskripsi}
                                         </p>
                                     </>

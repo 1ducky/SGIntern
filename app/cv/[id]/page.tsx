@@ -28,7 +28,8 @@ export default async function StaticCV ({params}:Props){
                     kelas: true,
                     kelamin : true,
                     pendidikan : true,
-                    link:true
+                    link:true,
+                    alamat:true
                 }
             }
         )
@@ -61,21 +62,26 @@ export default async function StaticCV ({params}:Props){
                         </li>
                         <li className="flex items-center gap-3">
                             <i className="fas fa-map-marker-alt w-5 text-center"></i>
-                            <span className="text-sm leading-tight">Jalan Swadaya 1, Jakarta Pusat, 11765</span>
+                            <span className="text-sm leading-tight">{userData?.alamat}</span>
                         </li>
                     </ul>
                 </div>
 
                 <div className="w-full text-[#2c4c58]">
-                    <h2 className="text-xl font-bold tracking-widest border-b-2 border-[#2c4c58] mb-4 pb-1 uppercase">Riwayat Pemdidikan</h2>
-                    <ul className="list-disc list-outside ml-5 space-y-2 text-sm">
-                        {userData?.pendidikan?.trim().split('+').map((item,i) => (
-                            <li key={i}>
-                                <a href={`https://www.google.com/search?q=${item}`}>{item}</a>
-                            
-                            </li>
-                        ))}
-                    </ul>
+                    {userData?.pendidikan && (
+                        <>
+                            <h2 className="text-xl font-bold tracking-widest border-b-2 border-[#2c4c58] mb-4 pb-1 uppercase">Riwayat Pemdidikan</h2>
+                            <ul className="list-disc list-outside ml-5 space-y-2 text-sm">
+                                {userData?.pendidikan?.trim().split('+').map((item,i) => (
+                                    <li key={i}>
+                                        <a href={`https://www.google.com/search?q=${item}`}>{item}</a>
+                                    
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
+                    
                 </div>
             </div>
 

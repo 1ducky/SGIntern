@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
     return(
@@ -7,10 +8,15 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">S</div>
-                <h2 className="text-xl font-bold tracking-tight">SGIntern <span className="text-blue-400">Sunan Giri Menganti</span></h2>
-              </div>
+                <Link href="/" className="relative w-36 aspect-[3/1] block">
+                  <Image
+                    src="/logo.webp"
+                    alt="logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </Link>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Platform digital resmi untuk memfasilitasi siswa dan alumni dalam meraih peluang karir di industri impian. Jembatan masa depan menuju kemandirian profesional.
               </p>
