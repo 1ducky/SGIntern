@@ -39,7 +39,10 @@ export default async function DashboardPerusahaan ({searchParams} : {searchParam
     ]
     return(
         <div className="w-full min-h-[360px] bg-white md:rounded-tr-2xl p-5 rounded-b-2xl flex flex-col flex-wrap gap-5">
-            <h2 className="text-4xl font-medium">Dashboard Perusahaan</h2>
+            <div>
+                <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
+                <p className="text-slate-500 text-sm">Monitoring Data Lowongan</p>
+            </div>
             <div className="px-5 py-3 rounded-2xl flex flex-row gap-5">
                 <Link href={'/dashboard/upload/perusahaan'} prefetch={false} className="px-3 py-1 bg-blue-100 rounded-2xl">Tambahkan</Link>
                 <Link href={`/dashboard/perusahaan?order=${ order == 'asc' ? 'desc': 'asc'}`} className="px-3 py-1 bg-blue-100 rounded-2xl">Urutkan</Link>

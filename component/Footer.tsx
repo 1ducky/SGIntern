@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             
             <div className="space-y-4">
-                <Link href="/" className="relative w-36 aspect-[3/1] block">
+                <Link href="/" className="relative w-36 aspect-3/1 block">
                   <Image
                     src="/logo.webp"
                     alt="logo"

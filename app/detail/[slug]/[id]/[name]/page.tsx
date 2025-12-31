@@ -107,7 +107,7 @@ async function DisplayDetail({id,slug}:{id:string,slug:string}){
                                 :
                                 // render Jika Sebuah Perusahaan
                                 (<>
-                                    <p className="text-xl font-semibold text-gray-700 mb-2 capitalize italic">
+                                    <p className="text-md font-semibold text-gray-700 mb-2 italic">
                                         <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>{data.alamat}
                                     </p>  
                                     

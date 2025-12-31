@@ -57,7 +57,7 @@ export default async function KategoriPage ( {params,searchParams} : Props ) {
   const query = (await searchParams)?.q || ''
   const jurusan = (await searchParams)?.jurusan || ''
   const Page = Number((await searchParams)?.page || 1)  
-  const Limit=15
+  const Limit=9
   const Offset= Limit * Math.max(Page-1,0)
 
   return (
