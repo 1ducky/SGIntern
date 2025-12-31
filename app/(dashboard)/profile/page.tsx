@@ -234,7 +234,7 @@ export default function SettingsPage ()  {
                     </div>
                     
                     <h3 className="text-2xl text-start">{AuthUser?.email}</h3>
-                    <h3 className="text-2xl text-start">{userData?.role?.toLowerCase() == 'admin' ? <Link prefetch={false} className="capitalize text-blue-500 hover:text-blue-300" href={'/dashboard'}>{userData?.role} Dashboard</Link> : 'Pelajar'}</h3>
+                    <h3 className="text-2xl text-start">{userData?.role?.toLowerCase() == 'admin' ? <Link prefetch={false} className="capitalize text-blue-500 hover:text-blue-300" href={'/dashboard'}>{userData?.role} Panel</Link> : 'Pelajar'}</h3>
                 </div>
             </div>
 

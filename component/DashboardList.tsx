@@ -39,11 +39,11 @@ export default function DashboardList<T extends WithId>({Head,Items,Path}: Dashb
                         <tr key={i} className="hover:bg-gray-50 transition-colors w-full overflow-x-scroll">
                             {Head.map((col,i) => (
                                 <td key={i} className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                    {col.render ? col.render(row[col.key], row) : truncate(String(row[col.key]),15)}
+                                    {col.render ? truncate(String(col.render(row[col.key], row)),15) : truncate(String(row[col.key]),15)}
                                 </td>
                             ))}
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex flex-row gap-5 items-baseline justify-between">
-                                {Path ? <Link href={`/detail/${Path}/${row.id}`}>Detail</Link> : null}
+                                {Path ? <Link href={`/detail/${Path}/${row.id}/${Path}`}>Detail</Link> : null}
                                 <Link href={`/dashboard/update/${Path}/${row.id}`} className="text-gray-400 hover:text-gray-600 text-center">Edit</Link>
                             </td>
                         </tr>

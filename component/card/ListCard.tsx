@@ -38,9 +38,9 @@ export const ListCardComponents = ({DataList,Path} : {DataList : Itemtype[],Path
                             : '/vercel.svg'
                         return (
                             
-                            <Link prefetch={false} href={`/detail/${Path}/${List.id}/${encodeURIComponent(List.name.replace(/ /g,'-'))}`} key={i} className="xl:basis-1/3 lg:basis-1/2 basis-full py-2 flex  transition-opacity px-3">
+                            <Link prefetch={false} href={`/detail/${Path}/${List.id}/${encodeURIComponent(List.name.replace(/ /g,'-'))}`} key={i} className="xl:basis-1/3 lg:basis-1/2 basis-full py-5 flex  transition-opacity px-3">
                                 <div className="w-full flex gap-5 bg-white rounded-2xl overflow-hidden text-black shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group cursor-pointer">
-                                    <div className="image shrink-0 w-32 h-32 bg-blue-300 relative rounded-2xl overflow-hidden object-cover">
+                                    <div className="image shrink-0 w-32 h-32 bg-blue-300 relative rounded-2xl overflow-hidden object-contain self-center mx-2">
                                         <Image src={fetchImage} 
                                             alt={List.name} 
                                             className=" object-cover "
@@ -56,8 +56,8 @@ export const ListCardComponents = ({DataList,Path} : {DataList : Itemtype[],Path
                                         {/* Static */}
                                         <h3 className="text-nowrap capitalize font-bold">{Path} {List.name}</h3>
                                         
-                                        <h3><i className="fa-solid fa-location-dot mt-1 text-gray-400"></i> {isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat : List.alamat}</h3>
-                                        <h2>{truncate(List.deskripsi ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.deskripsi ?? 'Tidak ada Deskripsi' : 'Tidak Ada Deskripsi'),60)}</h2>
+                                        <h3><i className="fa-solid fa-location-dot mt-1 text-gray-400"></i> {truncate(List.alamat ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat ?? 'Tidak Ada Alamat' : 'Tidak Ada Alamat'),30)}</h3>
+                                        <h2>{truncate(List.deskripsi ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.deskripsi ?? 'Tidak ada Deskripsi' : 'Tidak Ada Deskripsi'),30)}</h2>
                                     </div>
                                 </div>
                                 

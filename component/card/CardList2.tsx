@@ -56,7 +56,7 @@ export const ListCardComponents2 = ({DataList,Path} : {DataList : Itemtype[],Pat
                                         {/* Static */}
                                         <div className="flex gap-3 text-sm text-gray-500 leading-relaxed">
                                             <i className="fa-solid fa-location-dot mt-1 text-gray-400"></i>
-                                            <span>{isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat : List.alamat}</span>
+                                            <span>{truncate(List.alamat ?? (isPerusahaanObject(List.perusahaan) ? List.perusahaan.alamat ?? 'Tidak Ada Alamat' : 'Tidak Ada Alamat'),30)}</span>
                                         </div>
                                         <div className="flex flex-col gap-3 text-xs text-gray-500 items-start">
 
