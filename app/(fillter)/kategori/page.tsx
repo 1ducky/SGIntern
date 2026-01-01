@@ -68,7 +68,7 @@ async function MagangDisplay() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc`, {
+  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&limit=6`, {
       next:{revalidate:60}
   })
 
@@ -86,7 +86,7 @@ async function PerusahaanDisplay() {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
-  const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc`, {
+  const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc&limit=6`, {
       next:{revalidate:60}
   })
 
