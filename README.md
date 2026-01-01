@@ -70,7 +70,7 @@ Setelah Bahan Yang Dibutuhkan Terpenuh, Bisa Lanjut Instalasi
 3. Setelah Selesai Instalasi, Lakukan Generate Prisma Untuk Intilize
 
 ```bash
-    npm prisma generate
+    npx prisma generate
 ```
 
 4. Jalankan Demo Project di localhost:3000/
@@ -154,5 +154,6 @@ Jika Menggunakan env Sendiri Anda Bisa Masuk
  - Cari Akun Yang akan Jadi Admin
  - Ganti Role pelajar -> Admin
 
- Admin DashBoard Bisa Diakses Melalui Profile Yang Menggantika Pelajar Menjadi Link Admin Dashboard
+ DashBoard Admin Bisa Diakses Melalui Menu Profile Lalu Klik Link Admin Panel
+
 
