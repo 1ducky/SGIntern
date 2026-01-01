@@ -135,14 +135,14 @@ Anda Bisa Dapatkan dari [UploadThing](https://uploadthing.com/)
 ## Usage
 1. User Login Clerk(Belum Terdaftar Di Database)
 2. User Membuat CV di Menu Profile Pojok Kanan Atas(Terdaftar Ke Database)
-3. User Bisa Melihat CV yang Tergenerate
+3. User Bisa Melihat CV yang Tergenerate Setelah Menyimpan Datadiri
 4. User Bisa Mencari Lowongan, Magang, Dan Perusahaan Terkait
 5. User Bisa Melihat Data Lengkap
 
 ## Techniction
 Pada env Demo Sudah Tersedia Akun Admin dengan Login
 ```bash
-    admin@mail.com
+    bkksugi@mail.com
     Q1Q11234
 ```
 
