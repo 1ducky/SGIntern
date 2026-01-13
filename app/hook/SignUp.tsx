@@ -1,22 +1,25 @@
-export async function handleVerifyCode(e,signUp, setActive, router, setError, setBusy) {
+import ServerLog from "./Logging.app";
+
+export async function handleVerifyCode(e,signUp, setActive, router, setError, setBusy,setStep) {
     e.preventDefault();
     setBusy(true)
     try {
-        console.log(e)
         const ComplateSignUp = await signUp.attemptEmailAddressVerification({ code:e.target.code.value });
         if(ComplateSignUp.status !== "complete") {
-          console.log(JSON.stringify(ComplateSignUp, null, 2));
+          setError("Gagal Menvalidasi Code")
+          ServerLog("Gagal Menvalidasi Code","VerifyCode")
         }
         if(ComplateSignUp.status === "complete") {
-          console.log(JSON.stringify(ComplateSignUp, null, 2));
+          setError("Berhasil Menvalidasi Code")
+          ServerLog("Berhasil Menvalidasi Code","VerifyCode")
           await setActive({ session: ComplateSignUp.createdSessionId });
+          setStep("completed")
           router.replace('/')
+          router.refresh()
         }
-    }catch (err) {
-      console.log(JSON.stringify(err, null, 2));
-      console.log("FULL SIGNUP OBJECT", JSON.parse(JSON.stringify(signUp)));
-
+    }catch {
       setError("Gagal Menvalidasi Email")
+      ServerLog("Gagal Menvalidasi Email","ErrorHandler VerifyCode")
       return
     }finally{
       setBusy(false)
@@ -38,15 +41,13 @@ export async function handleVerifyCode(e,signUp, setActive, router, setError, se
           password: e.target.password.value,
         });
         await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-        console.log("FULL SIGNUP OBJECT", JSON.parse(JSON.stringify(signUp)));
-  
-        console.log("Verification status:", signUp.verifications.emailAddress[0]);
         setStep("verifying");
+        ServerLog("Mencoba Verifikasi Email","SignUphandler")
 
   
-      }catch (err) {
-        console.log("SignUp Error",err);
+      }catch  {
         setError("Gagal Membuat Akun")
+        ServerLog("Gagal Mencoba Verfikasi Email","SignUpHandler")
         return
       }finally {
         setBusy(false);

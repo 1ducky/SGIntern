@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { HandlerSubmit, handleVerifyCode } from "@/app/hook/SignUp";
 import { SignUpForm } from "@/component/auth/SignUpForm";
 import { EmailVerifyForm } from "@/component/auth/EmailVerifyForm";
+import RedirectInformation from "@/component/auth/ComplateRedirect";
 
 
 export default function Page() {
@@ -28,7 +29,9 @@ export default function Page() {
               onSubmit={async (e) => HandlerSubmit(e,isLoaded,setError,setStep,setBusy,signUp)} 
               Error={Error} 
               Loading={busy}
-            />
+            >
+              <div id="clerk-captcha"></div>
+            </SignUpForm>
           </>
         )}
         {step === "verifying" && (
@@ -36,15 +39,21 @@ export default function Page() {
             <EmailVerifyForm 
               OnSubmitVerify={
                 async (e) => {
-                  handleVerifyCode(e, signUp, setActive, router, setError,setBusy)
+                  handleVerifyCode(e, signUp, setActive, router, setError,setBusy,setStep)
                 }} 
 
               Error={Error} 
               Loading={busy}/>
           </>
         )}
-        
-        <div id="clerk-captcha"></div>
+        {step === "completed" && (
+          <>
+            <RedirectInformation
+              EmailAddress={signUp.emailAddress}
+              info={"Mendaftar"}
+            />
+          </>
+        )}
       </div>
     </>
   )

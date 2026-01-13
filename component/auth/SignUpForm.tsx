@@ -34,7 +34,7 @@ export default function SignUpFormold({onSubmit, Loading, Error}) {
     )
 }
 
-export function SignUpForm({onSubmit,Loading,Error}) {
+export function SignUpForm({onSubmit,Loading,Error,children}) {
   const [showPassword,setShowPassword] = useState<boolean>(false)
   const [showConfirmPassword,setShowConfirmPassword] = useState<boolean>(false)
 
@@ -144,6 +144,7 @@ export function SignUpForm({onSubmit,Loading,Error}) {
               required
               className="w-5 h-5 rounded border-gray-300 mt-0.5"
             />
+            {children}
             <span className="text-sm text-gray-700">
               Saya menyetujui{' '}
               <Link href={'#'} className="text-blue-600 hover:text-blue-700 font-semibold">
