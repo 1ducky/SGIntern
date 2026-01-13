@@ -5,8 +5,8 @@ import { useSignUp } from "@clerk/nextjs";
 
 import { useRouter } from "next/navigation";
 import { HandlerSubmit, handleVerifyCode } from "@/app/hook/SignUp";
-import SignUpForm from "@/component/auth/SignUpForm";
-import EmailVerifyForm from "@/component/auth/EmailVerifyForm";
+import { SignUpForm } from "@/component/auth/SignUpForm";
+import { EmailVerifyForm } from "@/component/auth/EmailVerifyForm";
 
 
 export default function Page() {
