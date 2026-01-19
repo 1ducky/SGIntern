@@ -1,14 +1,20 @@
-
+import { GetApiResponse, LowonganRow, MagangRow, PerusahaanRow } from "@/lib/types/apitypes"
 
 import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton"
 
+import { Suspense, use } from "react"
 
-import { Suspense } from "react"
-
+// Feature Component
 import { Section } from "@/component/homePage/section"
 import { MagangFeature } from "@/component/homePage/magangFeature"
 import { JobFeature } from "@/component/homePage/jobFeature"
 import { CompanyFeature } from "@/component/homePage/companyFeature"
+
+// useCase
+import getMagangHomePage from "@/lib/data/homepage/getMagang"
+import getLowonganHomePage from "@/lib/data/homepage/getLowongan"
+import getPerusahaanHomePage from "@/lib/data/homepage/getPerusahaan"
+
 
 
 
@@ -32,36 +38,35 @@ export default async function Home() {
   //   },
   // ]
 
+  // Initialize Request
+  const MagangList = getMagangHomePage()
+  const LowonganList = getLowonganHomePage()
+  const PerusahaanList = getPerusahaanHomePage()
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Section/>
       <Suspense fallback={<ListCardSkeleton Total={6}/>}>
-        <MagangDisplay/>
+        <MagangDisplay promise={MagangList}/>
       </Suspense>
 
 
       <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-        <PerusahaanDisplay/>
+        <PerusahaanDisplay promise={PerusahaanList}/>
       </Suspense>
 
   
       <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-        <LowonganDisplay/>
+        <LowonganDisplay promise={LowonganList}/>
       </Suspense>
     </div>
     
   )
 }
 
-async function MagangDisplay() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+ function MagangDisplay({promise} : {promise : Promise<GetApiResponse<MagangRow[]>>}) {
 
-  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=asc&limit=6`, {
-    next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const { data } = use(promise)
   
 
   return(
@@ -70,15 +75,9 @@ async function MagangDisplay() {
     </>
   )
 }
-async function PerusahaanDisplay() {
+function PerusahaanDisplay({promise} : {promise : Promise<GetApiResponse<PerusahaanRow[]>>}) {
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
-  const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc&limit=6`, {
-      next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const {data} = use(promise)
   
 
   return(
@@ -87,15 +86,9 @@ async function PerusahaanDisplay() {
     </>
   )
 }
-async function LowonganDisplay() {
+function LowonganDisplay({promise} : {promise : Promise<GetApiResponse<LowonganRow[]>>}) {
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
-  const res = await fetch(`${baseUrl}/api/list/lowongan?order[createAt]=desc&limit=6`, {
-      next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const {data} = use(promise)
   
 
   return(

@@ -16,7 +16,16 @@ export const CompanyCard = ({ company }) =>{
     <Card className="p-6 text-center cursor-pointer hover:border-blue-500 border-2 border-transparent grid items-center">
       <div className="mb-4 flex justify-center">
           <div className="w-20 h-20 relative">
-            <Image src={fetchImage} alt={company.name} fill className=" rounded-xl object-cover" />
+            <Image 
+              src={fetchImage} 
+              alt={company.name} 
+              fill
+              decoding="async" 
+              priority={false} 
+              sizes="96px"
+              quality={75}
+              className=" rounded-xl object-cover"
+               />
           </div>
       </div>
       <h3 className="text-lg font-bold text-gray-900 mb-2">{company.name || 'Tidak Ada Nama'}</h3>

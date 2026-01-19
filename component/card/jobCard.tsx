@@ -23,7 +23,16 @@ export const JobCard = ({ job }) => {
                 <p className="text-gray-600 font-medium mb-3">{job.perusahaan?.name || 'Tidak Ada Nama Perusahaan'}</p>
             </div>
             <div className="w-12 h-12 relative">
-                <Image src={fetchImage} alt={job.name || 'Tidak Ada Nama'} fill loading="lazy" className=" rounded-lg object-cover" />
+                <Image 
+                    src={fetchImage} 
+                    alt={job.name || 'Tidak Ada Nama'} 
+                    fill 
+                    loading="lazy"
+                    decoding="async" 
+                    priority={false} 
+                    sizes="96px"
+                    quality={75}
+                     className=" rounded-lg object-cover" />
             </div>
             </div>
             
