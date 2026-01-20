@@ -6,17 +6,14 @@ import { Suspense, use } from "react"
 
 // Feature Component
 import { Section } from "@/component/homePage/section"
-import { MagangFeature } from "@/component/homePage/magangFeature"
-import { JobFeature } from "@/component/homePage/jobFeature"
-import { CompanyFeature } from "@/component/homePage/companyFeature"
+import { MagangFeatureHomePage } from "@/component/homePage/magangFeature"
+import { JobFeatureHomePage } from "@/component/homePage/jobFeature"
+import { CompanyFeatureHomePage } from "@/component/homePage/companyFeature"
 
 // useCase
 import getMagangHomePage from "@/lib/data/homepage/getMagang"
 import getLowonganHomePage from "@/lib/data/homepage/getLowongan"
 import getPerusahaanHomePage from "@/lib/data/homepage/getPerusahaan"
-
-
-
 
 export default async function Home() {
 
@@ -44,7 +41,7 @@ export default async function Home() {
   const PerusahaanList = getPerusahaanHomePage()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Section/>
       <Suspense fallback={<ListCardSkeleton Total={6}/>}>
         <MagangDisplay promise={MagangList}/>
@@ -71,7 +68,7 @@ export default async function Home() {
 
   return(
     <>
-      <MagangFeature magangs={data} />
+      <MagangFeatureHomePage magangs={data} />
     </>
   )
 }
@@ -82,7 +79,7 @@ function PerusahaanDisplay({promise} : {promise : Promise<GetApiResponse<Perusah
 
   return(
     <>
-      <CompanyFeature companies={data}/>
+      <CompanyFeatureHomePage companies={data}/>
     </>
   )
 }
@@ -93,7 +90,7 @@ function LowonganDisplay({promise} : {promise : Promise<GetApiResponse<LowonganR
 
   return(
     <>
-      <JobFeature jobs={data}/>
+      <JobFeatureHomePage jobs={data}/>
     </>
   )
 }
