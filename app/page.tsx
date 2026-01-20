@@ -1,13 +1,20 @@
-import Image from "next/image"
+import { GetApiResponse, LowonganRow, MagangRow, PerusahaanRow } from "@/lib/types/apitypes"
 
 import { ListCardSkeleton } from "@/component/Skeleton/ListCardSkeleton"
-import { ListCardComponents } from "@/component/card/ListCard"
 
-import { Suspense } from "react"
+import { Suspense, use } from "react"
 
-// import { getRandomItem } from "@/utils/getRandomIndex"
-// import { jurusanText } from "@/StatisData/StatisObj"
-import { ListCardComponents2 } from "@/component/card/CardList2"
+// Feature Component
+import { Section } from "@/component/homePage/section"
+import { MagangFeature } from "@/component/homePage/magangFeature"
+import { JobFeature } from "@/component/homePage/jobFeature"
+import { CompanyFeature } from "@/component/homePage/companyFeature"
+
+// useCase
+import getMagangHomePage from "@/lib/data/homepage/getMagang"
+import getLowonganHomePage from "@/lib/data/homepage/getLowongan"
+import getPerusahaanHomePage from "@/lib/data/homepage/getPerusahaan"
+
 
 
 
@@ -31,122 +38,62 @@ export default async function Home() {
   //   },
   // ]
 
+  // Initialize Request
+  const MagangList = getMagangHomePage()
+  const LowonganList = getLowonganHomePage()
+  const PerusahaanList = getPerusahaanHomePage()
 
   return (
-    <>
-      <Image
-  src="/banner/b4.webp"
-  alt="Banner"
-  width={1920}
-  height={600}
-  className="w-full h-auto"
-  priority={true}
-  decoding="async"
-/>
-      <div className=" md:px-20 sm:px-10 px-5 mt-10">
-        <h2 className="text-2xl">Daftar Magang</h2>
-        <Suspense fallback={<ListCardSkeleton Total={6}/>}>
-          <MagangDisplay/>
-        </Suspense>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Section/>
+      <Suspense fallback={<ListCardSkeleton Total={6}/>}>
+        <MagangDisplay promise={MagangList}/>
+      </Suspense>
 
-      <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
-        <h2 className="text-2xl">Daftar Mitra Dudika</h2>
-        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-          <PerusahaanDisplay/>
-        </Suspense>
-      </div>
-      <div className=" md:px-20 sm:px-10 px-5 mt-10">
-        <h2 className="text-2xl">Daftar Lowongan Pekerjaan</h2>
-        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-          <LowonganDisplay/>
-        </Suspense>
-      </div>
-      {/* <div className="bg-white md:px-20 sm:px-10 px-5 mt-10 py-10">
-        <h2 className="text-2xl">Daftar Magang Jurusan Acak</h2>
-        <Suspense fallback={<ListCardSkeleton Total={10}/>}>
-          <RandomMagangDisplay/>
-        </Suspense>
-      </div> */}
-      
-      <div className="w-full"></div>
 
-      {/* Footer */}
+      <Suspense fallback={<ListCardSkeleton Total={10}/>}>
+        <PerusahaanDisplay promise={PerusahaanList}/>
+      </Suspense>
 
-     
-      
-    </>
+  
+      <Suspense fallback={<ListCardSkeleton Total={10}/>}>
+        <LowonganDisplay promise={LowonganList}/>
+      </Suspense>
+    </div>
     
   )
 }
 
-async function MagangDisplay() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+ function MagangDisplay({promise} : {promise : Promise<GetApiResponse<MagangRow[]>>}) {
 
-  const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=asc&limit=6`, {
-    next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const { data } = use(promise)
   
 
   return(
     <>
-      <ListCardComponents DataList={data} Path='magang'/>
+      <MagangFeature magangs={data} />
     </>
   )
 }
-async function PerusahaanDisplay() {
+function PerusahaanDisplay({promise} : {promise : Promise<GetApiResponse<PerusahaanRow[]>>}) {
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
-  const res = await fetch(`${baseUrl}/api/list/perusahaan?order[createAt]=desc&limit=6`, {
-      next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const {data} = use(promise)
   
 
   return(
     <>
-      <ListCardComponents2 DataList={data} Path='perusahaan'/>
+      <CompanyFeature companies={data}/>
     </>
   )
 }
-async function LowonganDisplay() {
+function LowonganDisplay({promise} : {promise : Promise<GetApiResponse<LowonganRow[]>>}) {
 
-  
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-
-  const res = await fetch(`${baseUrl}/api/list/lowongan?order[createAt]=desc&limit=6`, {
-      next:{revalidate:60}
-  })
-
-  const {data} = await res.json()
+  const {data} = use(promise)
   
 
   return(
     <>
-      <ListCardComponents2 DataList={data} Path='lowongan'/>
+      <JobFeature jobs={data}/>
     </>
   )
 }
-// async function RandomMagangDisplay() {
-
-    
-//     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-//     // const Random = getRandomItem(jurusanText)
-
-//     const res = await fetch(`${baseUrl}/api/list/magang?order[createAt]=desc&order[jurusan]=TMI`, {
-//         next:{revalidate:60}
-//     })
-
-//     const {data} = await res.json()
-    
-
-//     return(
-//       <>
-//         <ListCardComponents2 DataList={data} Path='magang'/>
-//       </>
-//     )
-// }

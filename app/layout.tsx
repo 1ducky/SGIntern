@@ -48,9 +48,9 @@ export default function RootLayout({
 
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-blue-100 bg-[url('/bg.svg')] bg-repeat`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-indigo-100 bg-[url('/bg.svg')] bg-repeat`}
         >
-          <MenuUi></MenuUi>
+          <MenuUi/>
           <div className="mt-20"></div>
           {children}
           <Footer/>

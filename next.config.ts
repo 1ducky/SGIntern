@@ -14,6 +14,17 @@ const nextConfig: NextConfig = {
           hostname: 'ufnqref5sv.ufs.sh',
           pathname: '/**',
         },
+        // test
+        {
+          protocol: 'https',
+          hostname: 'images.unsplash.com',
+          pathname: '/**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'api.dicebear.com',
+          pathname: '/**',
+        },
       ],
     },
 };

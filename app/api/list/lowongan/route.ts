@@ -49,6 +49,8 @@ export async function GET(req: Request) {
                 name:true,
                 id:true,
                 deskripsi:true,
+                jurusan:true,
+                keahlian:true,
                 perusahaan:{
                     select:{
                         id:true,
