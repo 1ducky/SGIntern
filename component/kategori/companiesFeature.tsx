@@ -2,7 +2,7 @@
 import { CompanyCard } from "../card/companyCard"
 import Link from "next/link"
 
-export const CompanyFeatureHomePage = ({companies}) => {
+export const CompanyFeatureCategoryPage = ({companies}) => {
     return(
         <>
             {/* Top Companies Section */}
