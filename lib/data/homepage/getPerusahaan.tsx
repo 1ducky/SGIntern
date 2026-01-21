@@ -4,7 +4,7 @@ export default function getPerusahaanHomePage() {
     return repositoryPerusahaan({
         limit: 6,
         order:[
-            {field : 'createAt', value : 'asc'}
+            {field : 'createAt', value : 'desc'}
         ]
     })
 }

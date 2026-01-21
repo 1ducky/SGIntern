@@ -1,5 +1,5 @@
 // sorting only
-export const SORTABLE_FIELDS = ['createdAt'] as const
+export const SORTABLE_FIELDS = ['createAt'] as const
 export type SortField = typeof SORTABLE_FIELDS[number]
 
 // filter
