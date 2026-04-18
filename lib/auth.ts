@@ -1,3 +1,4 @@
+import authSigin from "@/feature/auth/auth.services"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 // import Google from "next-auth/providers/google"
@@ -13,15 +14,16 @@ export const AuthOptions: NextAuthOptions = {
 
     Credentials({
       name: "Credentials",
-    //   Valid Credentials Fields
+      // Valid Credentials Fields
       credentials: {
         email: {},
         password: {},
       },
       async authorize(credentials) {
-        if(!credentials) return null
-        // Validasi user dari database di sini
-        const user = { id: "1", name: "User", email: credentials?.email, role: 'admin' }
+        if(!credentials) throw new Error("Tidak Ada Field")
+        const user = await authSigin({email:credentials.email, password: credentials.password})
+        if(!user) throw new Error("Email atau Password Salah")
+        
         return user 
       },
     }),
@@ -33,15 +35,20 @@ export const AuthOptions: NextAuthOptions = {
   
 
   secret: process.env.NEXTAUTH_SECRET,
+
+  // jika ingin menambahkan field pada token dan session
+  // bisa tambahakan prop di types/next-auth.d.ts
   callbacks:{
         async jwt({ token, user }) {
             if (user) {
+                token.id = user.id
                 token.role = user.role
             }
             return token
         },
 
         async session({session,token}){
+            session.user.id = token.id
             session.user.role = token.role
             return session
         }

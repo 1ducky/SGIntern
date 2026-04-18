@@ -12,12 +12,32 @@ export const userRepository = {
   updateUser,
 };
 
+export const authUserRepository ={
+  getAuthUserByEmail
+}
+
 // Visiility Fields
 const select = {
   email: true,
   name: true,
   id: true,
 };
+
+async function getAuthUserByEmail(email: string){
+  const user = await prisma.user.findUnique({
+    where:{
+      email: email
+    },
+    select:{
+      id:true,
+      email:true,
+      password:true,
+      name:true,
+      role:true
+    }
+  })
+  return user
+}
 
 // get List of Users
 async function getUsers(take: number, skip: number) {
