@@ -2,11 +2,12 @@ import { hash } from "bcrypt"
 import { userRepository } from "./user.repository"
 import { RegisterSchema, UpdateUserSchema } from "./user.schema"
 import { failed, ok } from "@/utils/response-api"
+import { JWT } from "next-auth/jwt"
 
 export async function createUser(data: unknown){
     const parsed  = await RegisterSchema.safeParse(data)
     if(!parsed.success){
-        return failed(422,parsed.error.flatten(),'Invalid Field')
+        return failed(422,parsed.error.flatten().fieldErrors,'Invalid Field')
     }
     try {
         const exists = await userRepository.findUserByEmail(parsed.data.email)
@@ -34,7 +35,7 @@ export async function deleteUser(id:string) {
 export async function putUpdateUser(data:unknown,id:string){
     const parsed = await UpdateUserSchema.safeParse(data)
     if(!parsed.success){
-        return failed(422,parsed.error.flatten(),'Invalid Field')
+        return failed(422,parsed.error.flatten().fieldErrors,'Invalid Field')
     }
     const exists = await userRepository.findUserById(id)
     if(!exists) {

@@ -17,10 +17,20 @@ enum Role {
   ADMIN
 }
 
+enum UserStatus{
+  VERIFIED
+  UNVERIFIED
+}
+
 model User{
   id    String @id @default(cuid())
   name  String
   email String @unique
   password String
   role Role @default(USER)
+  status UserStatus @default(UNVERIFIED)
+
+  // timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
