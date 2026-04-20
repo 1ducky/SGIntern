@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import { authUserRepository } from "../users/user.repository";
 
-export default async function authSigin({email,password}:{email:string,password:string}) {
+export default async function authSignin({email,password}:{email:string,password:string}) {
     const user = await authUserRepository.getAuthUserByEmail(email)
     if(!user || await compare(password,user.password) == false){
         return null

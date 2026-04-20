@@ -1,4 +1,4 @@
-import authSigin from "@/feature/auth/auth.services"
+import authSignin from "@/feature/auth/auth.services"
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 // import Google from "next-auth/providers/google"
@@ -21,7 +21,8 @@ export const AuthOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if(!credentials) throw new Error("Tidak Ada Field")
-        const user = await authSigin({email:credentials.email, password: credentials.password})
+        const user = await authSignin({email:credentials.email, password: credentials.password})
+        console.log(user)
         if(!user) throw new Error("Email atau Password Salah")
         
         return user 
@@ -31,6 +32,7 @@ export const AuthOptions: NextAuthOptions = {
 
   session: {
     strategy: "jwt", // atau "database"
+    maxAge: 15*60 // 15 menit
   },
   
 
