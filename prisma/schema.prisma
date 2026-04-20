@@ -22,6 +22,11 @@ enum UserStatus{
   UNVERIFIED
 }
 
+enum CompanyStatus{
+  ACTIVE
+  INACTIVE
+}
+
 model User{
   id    String @id @default(cuid())
   name  String
@@ -33,4 +38,23 @@ model User{
   // timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+}
+
+model Companies {
+  id String @id @default(cuid())
+  name String
+  description String
+  website String // URL of the Company's website, exemple "google.com"
+  location String
+  logo String // URL of the Company's logo, exemple "https://logo.clearbit.com/google.com"
+  status CompanyStatus @default(ACTIVE)
+
+  // relationships
+  // many to many with jobs
+  // many to many with internships
+
+  // timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
 }
