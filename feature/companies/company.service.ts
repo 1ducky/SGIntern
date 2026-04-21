@@ -16,16 +16,6 @@ export async function createCompany(data: unknown) {
         return failed(422, parsed.error.flatten().fieldErrors, "Invalid Field");
     }
     try {
-        const exists = await companyRepository.findCompanyByName(
-            parsed.data.name,
-        );
-        if (exists) {
-            return failed(
-                422,
-                "NAME EXISTS",
-                "Nama Perusahaan Sudah Digunakan",
-            );
-        }
         const slug = generateSlug(parsed.data.name);
         const slugExists = await companyRepository.findCompanyBySlug(slug);
         if (slugExists) {
