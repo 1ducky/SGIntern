@@ -30,6 +30,12 @@ model User{
   role Role @default(USER)
   status UserStatus @default(UNVERIFIED)
 
+  // token management
+  tokenVersion Int @default(0) 
+  refreshToken String?
+  refreshTokenExpiry DateTime?
+
+
   // timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
