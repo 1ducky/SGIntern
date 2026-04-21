@@ -42,7 +42,8 @@ model User{
 
 model Companies {
   id String @id @default(cuid())
-  name String
+  name String @unique
+  slug String @unique
   description String
   website String // URL of the Company's website, exemple "google.com"
   location String
