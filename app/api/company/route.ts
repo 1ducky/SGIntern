@@ -22,6 +22,14 @@ export async function GET(request: Request) {
 export async function POST(request: NextRequest) {
     const data = await parseBody(request);
     const company = await createCompany(data);
+    const token: JWT | null = await getToken({
+        req: request,
+        secret: process.env.NEXTAUTH_SECRET,
+    });
+    if (!token)
+        return NextResponse.json(
+            failed(401, "UNAUTHENTICATED", "Anda Belum Login"),
+        );
     // tambahkan fitur auto login jika berhasil
     return NextResponse.json(company);
 }
