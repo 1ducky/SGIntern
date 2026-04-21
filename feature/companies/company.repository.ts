@@ -2,14 +2,6 @@ import prisma from "@/lib/prisma";
 import { CreateCompanyInput, UpdateCompanyInput } from "./company.schema";
 // import { nanoid } from "nanoid";
 
-// Slug generate
-function generateSlug(text: string) {
-    return text
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w-]+/g, "");
-}
-
 // function generateUniqueSlug(name: string) {
 //     const baseSlug = generateSlug(name);
 //     const uniqueId = nanoid(6); // contoh: "aB3xYz"
@@ -18,7 +10,9 @@ function generateSlug(text: string) {
 // list of truth source
 export const companyRepository = {
     getCompanies,
+    findCompanyById,
     findCompanyByName,
+    findCompanyBySlug,
     findCompaniesBySlugSearch,
     createCompany,
     deleteCompany,
@@ -46,6 +40,13 @@ const select = {
 //     return slug;
 // }
 
+async function findCompanyBySlug(slug: string) {
+    return await prisma.companies.findUnique({
+        where: { slug },
+        select: select,
+    });
+}
+
 async function getCompanies(take: number, skip: number) {
     const [data, total] = await prisma.$transaction([
         prisma.companies.findMany({
@@ -56,6 +57,13 @@ async function getCompanies(take: number, skip: number) {
         prisma.companies.count(),
     ]);
     return { data, total };
+}
+
+async function findCompanyById(id: string) {
+    return await prisma.companies.findUnique({
+        where: { id },
+        select: select,
+    });
 }
 
 async function findCompanyByName(name: string) {
@@ -88,12 +96,11 @@ async function findCompaniesBySlugSearch(
     return { data, total };
 }
 
-async function createCompany(data: CreateCompanyInput) {
-    const slug = generateSlug(data.name);
+async function createCompany(data: CreateCompanyInput, slug: string) {
     const company = await prisma.companies.create({
         data: {
             name: data.name,
-            slug,
+            slug: slug,
             description: data.description,
             website: data.website,
             location: data.location,
