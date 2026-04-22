@@ -1,5 +1,5 @@
 import { authCompareRefreshToken, generateRefreshToken } from "@/feature/auth/auth.services";
-import { ok } from "@/utils/response-api";
+import { failed, ok } from "@/utils/response-api";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,17 +8,17 @@ export async function POST(request: NextRequest){
     const jwtToken = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
     console.log({rawToken,jwtToken})
     if(!rawToken || !jwtToken?.id){
-        return NextResponse.json({error: 'No Token Provided'})
+        return NextResponse.json(failed(401,'UNAUTHENTICATED', 'Token Tidak Valid'))
     }
     const compareToken = await authCompareRefreshToken(rawToken,jwtToken.id)
     if(compareToken.error){
-        return NextResponse.json({error: compareToken.error})
+        return NextResponse.json(failed(401,'UNAUTHENTICATED', compareToken.error))
     }
     if(!compareToken.id || !compareToken.version){
-        return NextResponse.json({error: 'invalid Token'})
+        return NextResponse.json(failed(401,'UNAUTHENTICATED', 'Token Tidak Valid'))
     }
     const {refreshToken} = await generateRefreshToken(compareToken.id, compareToken.version)
-    const res = NextResponse.json(ok({compareToken : compareToken},'Berhasil Login'))
+    const res = NextResponse.json(ok(null,'Berhasil Merefresh Token'))
     
     res.cookies.set('refreshToken',refreshToken, {
         httpOnly:true,

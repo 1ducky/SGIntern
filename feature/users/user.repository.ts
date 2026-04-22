@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { RegisterInput, UpdateUserInput } from "./user.schema";
-import { version } from "os";
+
 
 // list of truth source
 export const userRepository = {

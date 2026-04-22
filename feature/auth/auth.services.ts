@@ -2,7 +2,7 @@ import { compare, hash } from "bcrypt";
 import { authUserRepository } from "../users/user.repository";
 import generateToken from "@/utils/utils-auth";
 import { authLoginInput} from "./auth.schema";
-import { version } from "os";
+
 
 export async function authSignin(credentials: authLoginInput) {
 
