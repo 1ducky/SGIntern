@@ -11,7 +11,7 @@ export async function authSignin(credentials: authLoginInput) {
             return null
         }
         // jangan return password ke client
-        return { id: user.id, name: user.name, email: user.email, role: user.role}
+        return { id: user.id, name: user.name, email: user.email, role: user.role, tokenVersion: user.tokenVersion}
     }catch(error){
         console.log(error)
         return null
@@ -30,7 +30,7 @@ export async function generateRefreshToken(id:string) {
     }
 }
 
-export async function authRefreshToken(refreshToken:string,userId:string){
+export async function authCompareRefreshToken(refreshToken:string,userId:string){
     const user = await authUserRepository.getAuthUserRefreshTokenById(userId)
     if(!user || !user.refreshToken ){
         return {error: 'Invalid'}
@@ -45,9 +45,9 @@ export async function authRefreshToken(refreshToken:string,userId:string){
     return {success: true,id: user.id}
 }
 
-export async function authLogout(userId: string){
+export async function authLogout(userId: string, version: number){
     try{
-        await authUserRepository.updateAuthUserTokenLogout(userId)
+        await authUserRepository.updateAuthUserTokenLogout(userId,version)
         return {success:true}
     }catch(error){
         console.log(error)

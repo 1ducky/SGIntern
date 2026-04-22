@@ -1,4 +1,4 @@
-import { authRefreshToken, generateRefreshToken } from "@/feature/auth/auth.services";
+import { authCompareRefreshToken, generateRefreshToken } from "@/feature/auth/auth.services";
 import { ok } from "@/utils/response-api";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,10 +8,10 @@ export async function POST(request: NextRequest){
     const rawToken = request.cookies.get('refreshToken')?.value
     const jwtToken = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
     console.log({rawToken,jwtToken})
-    if(!rawToken || !jwtToken){
+    if(!rawToken || !jwtToken?.id){
         return NextResponse.json({error: 'No Token Provided'})
     }
-    const compareToken = await authRefreshToken(rawToken,jwtToken.id as string)
+    const compareToken = await authCompareRefreshToken(rawToken,jwtToken.id)
     if(compareToken.error){
         return NextResponse.json({error: compareToken.error})
     }

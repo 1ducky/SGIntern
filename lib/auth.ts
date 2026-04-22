@@ -25,7 +25,7 @@ export const AuthOptions: NextAuthOptions = {
         // console.log(user)
         if(!user) throw new Error("Email atau Password Salah")
         
-        return user 
+        return user
       },
     }),
   ],
@@ -48,6 +48,7 @@ export const AuthOptions: NextAuthOptions = {
             if (user) {
                 token.id = user.id
                 token.role = user.role
+                token.version = user.tokenVersion
             }
             return token
         },
@@ -55,6 +56,7 @@ export const AuthOptions: NextAuthOptions = {
         async session({session,token}){
             session.user.id = token.id
             session.user.role = token.role
+            session.user.tokenVersion = token.version
             return session
         }
     }

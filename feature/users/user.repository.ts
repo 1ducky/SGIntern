@@ -60,10 +60,11 @@ async function getAuthUserRefreshTokenById(id: string){
   return user
 }
 
-async function updateAuthUserTokenLogout(id: string) {
+async function updateAuthUserTokenLogout(id: string,version: number) {
   const user = await prisma.user.update({
     where:{
-      id: id
+      id: id,
+      tokenVersion: version
     },
     data:{
       tokenVersion:{increment: 1},
