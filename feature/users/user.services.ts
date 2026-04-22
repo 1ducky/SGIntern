@@ -2,7 +2,7 @@ import { hash } from "bcrypt"
 import { userRepository } from "./user.repository"
 import { RegisterSchema, UpdateUserSchema } from "./user.schema"
 import { failed, ok } from "@/utils/response-api"
-import { JWT } from "next-auth/jwt"
+
 
 export async function createUser(data: unknown){
     const parsed  = await RegisterSchema.safeParse(data)

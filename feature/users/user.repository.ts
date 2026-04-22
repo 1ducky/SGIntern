@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { RegisterInput, UpdateUserInput } from "./user.schema";
 
+
 // list of truth source
 export const userRepository = {
   getUsers,
@@ -13,7 +14,10 @@ export const userRepository = {
 };
 
 export const authUserRepository ={
-  getAuthUserByEmail
+  getAuthUserByEmail,
+  getAuthUserRefreshTokenById,
+  updateAuthUserTokenLogout,
+  updateUserToken
 }
 
 // Visiility Fields
@@ -21,6 +25,7 @@ const select = {
   email: true,
   name: true,
   id: true,
+  // tokenVersion:true
 };
 
 async function getAuthUserByEmail(email: string){
@@ -33,7 +38,59 @@ async function getAuthUserByEmail(email: string){
       email:true,
       password:true,
       name:true,
-      role:true
+      role:true,
+      tokenVersion:true,
+      refreshToken:true,
+      refreshTokenExpiry:true,
+    }
+  })
+  return user
+}
+async function getAuthUserRefreshTokenById(id: string){
+  const user = await prisma.user.findUnique({
+    where:{
+      id: id
+    },
+    select:{
+      id:true,
+      tokenVersion:true,
+      refreshToken:true,
+      refreshTokenExpiry:true,
+    }
+  })
+  return user
+}
+
+async function updateAuthUserTokenLogout(id: string,version: number) {
+  const user = await prisma.user.update({
+    where:{
+      id: id,
+      tokenVersion: version
+    },
+    data:{
+      tokenVersion:{increment: 1},
+      refreshToken: null,
+      refreshTokenExpiry: null
+    }
+  })
+  return user
+}
+
+async function updateUserToken(id: string,version : number, refreshToken: string, refreshTokenExpiry: Date){
+  const user = await prisma.user.update({
+    where:{
+      id: id,
+      tokenVersion : version
+    },
+    data:{
+      refreshToken:refreshToken,
+      refreshTokenExpiry: refreshTokenExpiry
+    },
+    select:{
+      id:true,
+      tokenVersion: true,
+      refreshToken: true,
+      refreshTokenExpiry: true
     }
   })
   return user
