@@ -14,7 +14,7 @@ export async function POST(request:NextRequest){
     if(!result){
         return NextResponse.json(failed(401,'UNAUTHORIZED','Email atau Password Salah'),{status:401})
     }
-    const {refreshToken} = await generateRefreshToken(result.id)
+    const {refreshToken} = await generateRefreshToken(result.id,result.tokenVersion)
     const res = NextResponse.json(ok(result,'Berhasil Login'))
 
     res.cookies.set('refreshToken',refreshToken, {

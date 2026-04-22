@@ -2,6 +2,7 @@ import { compare, hash } from "bcrypt";
 import { authUserRepository } from "../users/user.repository";
 import generateToken from "@/utils/utils-auth";
 import { authLoginInput} from "./auth.schema";
+import { version } from "os";
 
 export async function authSignin(credentials: authLoginInput) {
 
@@ -18,12 +19,12 @@ export async function authSignin(credentials: authLoginInput) {
     }
 }
 
-export async function generateRefreshToken(id:string) {
+export async function generateRefreshToken(id:string, version: number) {
     const rawToken = generateToken()
     const hashToken = await hash(rawToken,10)
     const expiry = new Date(Date.now() + 7*24*60*60*1000) // 7 hari
 
-    await authUserRepository.updateUserToken(id,hashToken,expiry)
+    await authUserRepository.updateUserToken(id,version,hashToken,expiry)
     return {
         refreshToken : rawToken,
         expiry
@@ -42,7 +43,7 @@ export async function authCompareRefreshToken(refreshToken:string,userId:string)
     if(new Date() > user.refreshTokenExpiry!){
         return {error: 'Expired'}
     }
-    return {success: true,id: user.id}
+    return {success: true,id: user.id, version: user.tokenVersion}
 }
 
 export async function authLogout(userId: string, version: number){

@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { RegisterInput, UpdateUserInput } from "./user.schema";
+import { version } from "os";
 
 // list of truth source
 export const userRepository = {
@@ -75,13 +76,13 @@ async function updateAuthUserTokenLogout(id: string,version: number) {
   return user
 }
 
-async function updateUserToken(id: string, refreshToken: string, refreshTokenExpiry: Date){
+async function updateUserToken(id: string,version : number, refreshToken: string, refreshTokenExpiry: Date){
   const user = await prisma.user.update({
     where:{
-      id: id
+      id: id,
+      tokenVersion : version
     },
     data:{
-      tokenVersion:{increment: 1},
       refreshToken:refreshToken,
       refreshTokenExpiry: refreshTokenExpiry
     },
