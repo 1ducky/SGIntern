@@ -11,10 +11,6 @@ export async function createUser(data: unknown){
         return failed(422,parsed.error.flatten().fieldErrors,'Invalid Field')
     }
     try {
-        // const exists = await userRepository.findUserByEmail(parsed.data.email)
-        // if(exists) {
-        //     return failed(422,'EMAIL EXISTS','Email Sudah Digunakan')
-        // }
         parsed.data.password = await hash(parsed.data.password,8)
         const user = await userRepository.createUser(parsed.data)
         return ok(user,'Berhasil Registrasi')
@@ -25,10 +21,7 @@ export async function createUser(data: unknown){
 } 
 
 export async function deleteUser(id:string,version:number) {
-    // const exists = await userRepository.findUserById(id)
-    // if(!exists){
-    //     return failed(404,'USER NOT FOUND', 'User Tidak Ditemukan')
-    // }
+
     try{
         await userRepository.deleteUser(id,version)
         return ok(null,'User Berhasil Dihapus')
