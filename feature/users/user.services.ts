@@ -2,6 +2,7 @@ import { hash } from "bcrypt"
 import { userRepository } from "./user.repository"
 import { RegisterSchema, UpdateUserSchema } from "./user.schema"
 import { failed, ok } from "@/utils/response-api"
+import { prismaErrorMapper } from "@/infrastructure/error/prisma-error-mapper"
 
 
 export async function createUser(data: unknown){
@@ -10,43 +11,44 @@ export async function createUser(data: unknown){
         return failed(422,parsed.error.flatten().fieldErrors,'Invalid Field')
     }
     try {
-        const exists = await userRepository.findUserByEmail(parsed.data.email)
-        if(exists) {
-            return failed(422,'EMAIL EXISTS','Email Sudah Digunakan')
-        }
+        // const exists = await userRepository.findUserByEmail(parsed.data.email)
+        // if(exists) {
+        //     return failed(422,'EMAIL EXISTS','Email Sudah Digunakan')
+        // }
         parsed.data.password = await hash(parsed.data.password,8)
         const user = await userRepository.createUser(parsed.data)
         return ok(user,'Berhasil Registrasi')
     } catch (error) {
         console.log(error)
-        return failed(500,'INTERNAL ERROR', 'kesalahan Internal')
+        return prismaErrorMapper(error)
     }
 } 
 
-export async function deleteUser(id:string) {
-    const exists = await userRepository.findUserById(id)
-    if(!exists){
-        return failed(404,'USER NOT FOUND', 'User Tidak Ditemukan')
+export async function deleteUser(id:string,version:number) {
+    // const exists = await userRepository.findUserById(id)
+    // if(!exists){
+    //     return failed(404,'USER NOT FOUND', 'User Tidak Ditemukan')
+    // }
+    try{
+        await userRepository.deleteUser(id,version)
+        return ok(null,'User Berhasil Dihapus')
+    }catch(error){
+        console.log(error)
+        return prismaErrorMapper(error)
     }
-    await userRepository.deleteUser(id)
-    return ok(null,'User Berhasil Dihapus')
 }
 
-export async function putUpdateUser(data:unknown,id:string){
+export async function putUpdateUser(data:unknown,id:string,version:number){
     const parsed = await UpdateUserSchema.safeParse(data)
     if(!parsed.success){
         return failed(422,parsed.error.flatten().fieldErrors,'Invalid Field')
     }
-    const exists = await userRepository.findUserById(id)
-    if(!exists) {
-        return failed(404,'USER NOT FOUND', 'User Tidak Ditemukan')
-    }
     try{
-        const user = await userRepository.updateUser(parsed.data,id)
+        const user = await userRepository.updateUser(parsed.data,id,version)
         return ok(user,'Behasil Update User')
     } catch (error) {
         console.log(error)
-        return failed(500,'INTERNAL ERROR', 'kesalahan Internal')
+        return prismaErrorMapper(error)
     }
 
 }
