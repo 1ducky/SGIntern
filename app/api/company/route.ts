@@ -26,10 +26,15 @@ export async function POST(request: NextRequest) {
         req: request,
         secret: process.env.NEXTAUTH_SECRET,
     });
-    if (!token)
+    if (!token?.id || !token?.version)
         return NextResponse.json(
             failed(401, "UNAUTHENTICATED", "Anda Belum Login"),
         );
+    if (token?.role !== "ADMIN") {
+        return NextResponse.json(
+            failed(403, "FORBIDDEN", "Akses hanya untuk admin"),
+        );
+    }
     // tambahkan fitur auto login jika berhasil
     return NextResponse.json(company);
 }
@@ -39,10 +44,15 @@ export async function PUT(request: NextRequest) {
         req: request,
         secret: process.env.NEXTAUTH_SECRET,
     });
-    if (!token)
+    if (!token?.id || !token?.version)
         return NextResponse.json(
             failed(401, "UNAUTHENTICATED", "Anda Belum Login"),
         );
+    if (token?.role !== "ADMIN") {
+        return NextResponse.json(
+            failed(403, "FORBIDDEN", "Akses hanya untuk admin"),
+        );
+    }
     const data = await parseBody(request);
     const company = await updateCompany(data, token?.id as string);
 
