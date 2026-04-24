@@ -15,6 +15,7 @@ export const userRepository = {
 
 export const authUserRepository ={
   getAuthUserByEmail,
+  getAuthUserByIdWithToken,
   getAuthUserRefreshTokenById,
   updateAuthUserTokenLogout,
   updateUserToken
@@ -27,6 +28,24 @@ const select = {
   id: true,
   // tokenVersion:true
 };
+
+async function getAuthUserByIdWithToken(id: string){
+  const user = await prisma.user.findFirst({
+    where:{
+      id: id
+    },
+    select:{
+      id:true,
+      email:true,
+      name:true,
+      role:true,
+      tokenVersion:true,
+      refreshToken:true,
+      refreshTokenExpiry:true
+    }
+  })
+  return user
+}
 
 async function getAuthUserByEmail(email: string){
   const user = await prisma.user.findUnique({
