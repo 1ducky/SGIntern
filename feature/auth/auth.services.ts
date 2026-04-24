@@ -3,7 +3,6 @@ import { authUserRepository } from "../users/user.repository";
 import generateToken from "@/utils/utils-auth";
 import { authLoginInput, RefreshCallBack} from "./auth.schema";
 import { JWT } from "next-auth/jwt";
-import { error } from "node:console";
 import { ApiResponse } from "@/utils/response-api";
 
 
