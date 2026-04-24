@@ -168,10 +168,11 @@ async function createUser(data: RegisterInput) {
 }
 
 // delete spesific user by id
-async function deleteUser(id: string) {
+async function deleteUser(id: string, version: number) {
   const user = await prisma.user.delete({
     where: {
       id: id,
+      tokenVersion:version
     },
     select
   });
@@ -179,9 +180,9 @@ async function deleteUser(id: string) {
 }
 
 // update all field, spesific user by id
-async function updateUser(data: UpdateUserInput, id: string) {
+async function updateUser(data: UpdateUserInput, id: string, version: number) {
   const user = await prisma.user.update({
-    where: { id: id },
+    where: { id: id, tokenVersion: version },
     data,
     select
   });
