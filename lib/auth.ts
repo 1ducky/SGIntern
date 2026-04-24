@@ -1,4 +1,4 @@
-import { authRefresh, authSignin } from "@/feature/auth/auth.services"
+import { authRefresh, authSignin } from '@/feature/auth/auth.services'
 import { NextAuthOptions } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
