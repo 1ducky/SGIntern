@@ -6,3 +6,16 @@ export const authLoginSchema = z.object({
 })
 
 export type authLoginInput = z.infer<typeof authLoginSchema>
+
+export type RefreshCallBack  ={
+    user : {
+        email : string
+        id : string
+        name : string
+        refreshToken : string
+        refreshTokenExpiry : string
+        role : string
+        tokenVersion : number
+    }
+    
+}

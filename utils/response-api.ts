@@ -12,6 +12,7 @@ type ErrorResponse = {
   message?: string;
 };
 
+export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse 
 
 export function ok<T>(data:T,message?:string): SuccessResponse<T>{
     return{
