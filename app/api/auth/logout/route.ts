@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     const jwtToken = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
-    if(!jwtToken?.id || !jwtToken?.version){
+
+    if(!jwtToken?.id || typeof jwtToken?.version !== 'number'){
         return NextResponse.json(failed(401,'UNAUTHENTICATED', 'Anda Belum Login'))
     }
     const result = await authLogout(jwtToken.id,jwtToken.version)
